@@ -2,14 +2,14 @@
 
 ## Features
 
-AngularJS
-Bootstrap 3
-Lodash
-jQuery
-ngTable
-Moment.js
-JSON Web Tokens
-CDNJS
+AngularJS,
+Bootstrap 3,
+Lodash,
+jQuery,
+ngTable,
+Moment.js,
+JSON Web Tokens,
+CDNJS,
 CodeIgniter 2
 
 ## Requires
