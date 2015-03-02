@@ -21,7 +21,6 @@ class Resources extends CI_Model {
         foreach ($resources as $key => $value) {
             $resource = new stdClass();
             $resource->name = $value;
-            error_log($role . ' ' . $value);
             $resource->permissions = $acl->rolePermissions($role, $resource->name);
             $resources[$key] = $resource;
         }
