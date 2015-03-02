@@ -12,14 +12,14 @@ controllers.controller('base', ['$scope', '$location', '$q', 'user', function($s
     $scope.init = function() {
         var promises = [];
     
-        promises.push(user.isAllowed('user', 'read')
-        .then(function() {
-            $scope.permissions.users = true;
+        promises.push(user.permissions('user', 'read')
+        .then(function(permissions) {
+            $scope.permissions.users = permissions;
         }));
     
-        promises.push(user.isAllowed('role', 'read')
-        .then(function() {
-            $scope.permissions.roles = true;
+        promises.push(user.permissions('role', 'read')
+        .then(function(permissions) {
+            $scope.permissions.roles = permissions;
         }));
         
         $q.all(promises)

@@ -1,7 +1,8 @@
 <div class="wrapper" data-ng-show="user.loggedIn()">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Edit Role</h1>
+            <h1 class="page-header" data-ng-if="!permissions.roles.contains('update')">View Role</h1>
+            <h1 class="page-header" data-ng-if="permissions.roles.contains('update')">Edit Role</h1>
             <div ng-include="'partials/alert.html'"></div>
         </div>
     </div>
@@ -12,7 +13,7 @@
                     <tr ng-repeat="resource in $data">
                         <td class="vmiddle" data-title="'Resource'" sortable="'resource'">{{resource.name}}</td>
                         <td class="vmiddle" style="width: 250px">
-                            <select selectpicker multiple="multiple" data-ng-model="resource.permissions">
+                            <select selectpicker multiple="multiple" data-ng-model="resource.permissions" data-ng-disabled="!permissions.roles.contains('update')">
                                 <option value="create" data-ng-selected="resource.permissions.indexOf('create') !== -1">Create</option>
                                 <option value="read" data-ng-selected="resource.permissions.indexOf('read') !== -1">Read</option>
                                 <option value="update" data-ng-selected="resource.permissions.indexOf('update') !== -1">Update</option>
@@ -26,9 +27,10 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-          <button type="submit" class="btn btn-success" data-ng-click="update()"><span class="fa fa-save"></span> Save</button>
-          <button type="submit" class="btn btn-primary" data-ng-click="update(true)"><span class="fa fa-check"></span> Save & Close</button>
-          <button type="submit" class="btn btn-default" data-ng-click="cancel()"><span class="fa fa-times"></span> Close Without Saving</button>
+          <button type="submit" class="btn btn-success" data-ng-click="update()" data-ng-if="permissions.roles.contains('update')"><span class="fa fa-save"></span> Save</button>
+          <button type="submit" class="btn btn-primary" data-ng-click="update(true)" data-ng-if="permissions.roles.contains('update')"><span class="fa fa-check"></span> Save & Close</button>
+          <button type="submit" class="btn btn-default" data-ng-click="cancel()" data-ng-if="permissions.roles.contains('update')"><span class="fa fa-times"></span> Close Without Saving</button>
+          <button type="submit" class="btn btn-default" data-ng-click="cancel()" data-ng-if="!permissions.roles.contains('update')"><span class="fa fa-times"></span> Close</button>
         </div>
     </div>
 

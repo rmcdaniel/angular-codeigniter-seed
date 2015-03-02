@@ -7,7 +7,7 @@ factory('user', function($q, $http) {
         clear: function() {
             store.set('user', {});
         },
-        isAllowed: function(resource, permission) {
+        permissions: function(resource, permission) {
             var deferred = $q.defer();
             var user = _.isUndefined(store.get('user')) ? {} : store.get('user');
             $http.post('api/user/permissions', {
@@ -15,10 +15,8 @@ factory('user', function($q, $http) {
                 resource: resource
             }).success(function(data) {
                 if (data.status) {
-                    if (data.permissions.indexOf(permission) != -1) {
-                        deferred.resolve();
-                        return;
-                    }
+                    deferred.resolve(data.permissions);
+                    return;
                 }
                 deferred.reject();
             });
@@ -88,10 +86,4 @@ factory('alerts', function($interval) {
             store.set('alerts', alerts);
         }
     };
-}).
-factory('permssions', function($interval) {
-
-    return {
-    }
-    
 });

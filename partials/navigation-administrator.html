@@ -228,10 +228,10 @@
                 <li>
                     <a href="#/administrator"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
-                <li data-ng-if="permissions.users">
+                <li data-ng-if="permissions.users.contains('read')">
                     <a href="#/administrator/users"><i class="fa fa-users fa-fw"></i> Users</a>
                 </li>
-                <li data-ng-if="permissions.roles">
+                <li data-ng-if="permissions.roles.contains('read')">
                     <a href="#/administrator/roles"><i class="fa fa-legal fa-fw"></i> Roles</a>
                 </li>
                 <li>

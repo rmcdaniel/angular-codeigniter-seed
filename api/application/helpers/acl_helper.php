@@ -117,31 +117,16 @@ class ACL {
         $this->backend->write("user_roles::$user", array_diff($this->userRoles($user), $roles));
     }
 
-    function roleParents($role) {
-        return $this->backend->read("role_parents::$role");
-    }
-
-    function addRoleParents($role, $parents) {
-        $parents = is_array($parents) ? $parents : array($parents);
-        $this->backend->write("role_parents::$role", array_unique(array_merge($this->roleParents($role), $parents)));
-    }
-
-    function removeRoleParents($role, $parents) {
-        $parents = is_array($parents) ? $parents : array($parents);
-        $this->backend->write("role_parents::$role", array_diff($this->roleParents($role), $parents));
-    }
-
-    function resourceRolePermissions($resource, $role) {
+    function rolePermissions($role, $resource) {
         return $this->backend->read("resource_role_permissions::$resource::$role");        
     }
-
     function addPermissions($roles, $resources, $permissions) {
         $roles = is_array($roles) ? $roles : array($roles);
         $resources = is_array($resources) ? $resources : array($resources);
         $permissions = is_array($permissions) ? $permissions : array($permissions);
         foreach ($resources as $resource) {
             foreach ($roles as $role) {
-                $this->backend->write("resource_role_permissions::$resource::$role", array_unique(array_merge($this->resourceRolePermissions($resource, $role), $permissions)));
+                $this->backend->write("resource_role_permissions::$resource::$role", array_unique(array_merge($this->rolePermissions($role, $resource), $permissions)));
             }
         }
     }
@@ -152,20 +137,9 @@ class ACL {
         $permissions = is_array($permissions) ? $permissions : array($permissions);
         foreach ($resources as $resource) {
             foreach ($roles as $role) {
-                $this->backend->write("resource_role_permissions::$resource::$role", array_diff($this->resourceRolePermissions($resource, $role), $permissions));
+                $this->backend->write("resource_role_permissions::$resource::$role", array_diff($this->rolePermissions($role, $resource), $permissions));
             }
         }
-    }
-
-    function rolePermissions($role, $resource, $checked = array()) {
-        if (in_array($role, $checked)) return;
-        $checked[] = $role;
-        $parents = $this->roleParents($role);
-        $permissions = array();
-        foreach ($parents as $parent) {
-            $permissions = array_unique(array_merge($permissions, $this->rolePermissions($parent, $resource, $checked)));
-        }
-        return array_unique(array_merge($permissions, $this->resourceRolePermissions($resource, $role)));
     }
 
     function userPermissions($user, $resource) {
@@ -188,6 +162,8 @@ class ACL {
         $acl = new ACL();
 		$acl->addRole('administrator');
 		$acl->addUserRoles(1, 'administrator');
+		$acl->addResource('Administrator');
+        $acl->addPermissions('administrator', 'Administrator', 'read');
 		$acl->addResource($class);
         foreach (get_public_methods($class) as $method) {
             if (($method !== '__construct') && ($method !== 'get_instance')) {

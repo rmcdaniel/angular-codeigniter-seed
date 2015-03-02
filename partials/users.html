@@ -18,8 +18,9 @@
                                     <span class="fa fa-chevron-down"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}">Edit</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                                    <li data-ng-if="!permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}">View</a></li>
+                                    <li data-ng-if="permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}">Edit</a></li>
+                                    <li data-ng-if="permissions.users.contains('delete')" role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
                                 </ul>
                             </div>
                         </td>
