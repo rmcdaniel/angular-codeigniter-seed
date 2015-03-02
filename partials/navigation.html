@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-if="!active('/administrator')">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -14,13 +14,16 @@
                 <li data-ng-class="{ active: active('/home')}">
                     <a href="#/home">Home</a>
                 </li>
-                <li data-ng-hide="user.token" data-ng-class="{ active: active('/login')}">
+                <li data-ng-hide="user.loggedIn()" data-ng-class="{ active: active('/login')}">
                     <a href="#/login">Login</a>
                 </li>
-                <li data-ng-hide="user.token" data-ng-class="{ active: active('/register')}">
+                <li data-ng-hide="user.loggedIn()" data-ng-class="{ active: active('/register')}">
                     <a href="#/register">Register</a>
                 </li>
-                <li data-ng-show="user.token">
+                <li data-ng-show="user.loggedIn()">
+                    <a href="#/administrator">Administrator Panel</a>
+                </li>
+                <li data-ng-show="user.loggedIn()">
                     <a href data-ng-click="logout()">Logout</a>
                 </li>
                 <li data-ng-class="{ active: active('/about')}">

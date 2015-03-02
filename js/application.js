@@ -1,11 +1,36 @@
 'use strict';
 
-angular.module('acs', ['acs.filters', 'acs.services', 'acs.directives', 'acs.controllers', 'ngRoute', 'ui.bootstrap']).
+angular.module('acs', ['acs.filters', 'acs.services', 'acs.directives', 'acs.controllers', 'ngRoute', 'ui.bootstrap', 'ngTable']).
 config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
 
     $routeProvider.when('/home', {
         controller: 'home',
         templateUrl: 'partials/home.html'
+    });
+
+    $routeProvider.when('/administrator', {
+        controller: 'administrator',
+        templateUrl: 'partials/administrator.html'
+    });
+
+    $routeProvider.when('/administrator/users', {
+        controller: 'users',
+        templateUrl: 'partials/users.html'
+    });
+
+    $routeProvider.when('/administrator/user/:id', {
+        controller: 'user',
+        templateUrl: 'partials/user.html'
+    });
+
+    $routeProvider.when('/administrator/roles', {
+        controller: 'roles',
+        templateUrl: 'partials/roles.html'
+    });
+                
+    $routeProvider.when('/administrator/role/:role', {
+        controller: 'role',
+        templateUrl: 'partials/role.html'
     });
 
     $routeProvider.when('/about', {

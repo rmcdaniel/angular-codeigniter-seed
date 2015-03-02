@@ -1,0 +1,31 @@
+<div class="wrapper" data-ng-show="user.loggedIn()">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Users</h1>
+            <div ng-include="'partials/alert.html'"></div>
+        </div>
+    </div>
+    <div class="row" loading="['tableLoaded']">
+        <div class="col-lg-12">
+            <table ng-table="tableParams" class="table table table-striped table-bordered table-hover">
+                <tbody>
+                    <tr ng-repeat="user in $data">
+                        <td class="vmiddle" data-title="'Id'" sortable="'id'">{{user.id}}</td>
+                        <td class="vmiddle" data-title="'Email'" sortable="'email'">{{user.email}}</td>
+                        <td class="vmiddle" style="width: 50px">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown">
+                                    <span class="fa fa-chevron-down"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}">Edit</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

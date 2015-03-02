@@ -1,0 +1,6 @@
+<div data-ng-repeat="alert in alerts.get() track by alert.timestamp">
+    <div data-ng-if="alert.success" class="alert alert-success" role="alert">{{alert.success}}</div>
+    <div data-ng-if="alert.info" class="alert alert-info" role="alert">{{alert.info}}</div>
+    <div data-ng-if="alert.warning" class="alert alert-warning" role="alert">{{alert.warning}}</div>
+    <div data-ng-if="alert.danger" class="alert alert-danger" role="alert">{{alert.danger}}</div>
+</div>
