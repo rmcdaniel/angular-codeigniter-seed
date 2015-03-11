@@ -17,7 +17,7 @@
   "txt": {
     "admin_panel"         : "Administrator Panel",
     "view_details"        : "View Details",
-    "roles"               : "Roles",
+    "resource"            : "Resource",
     "users"               : "Users",
     "dashboard"           : "Dashboard",
     "view_frontend"       : "View Frontend",
@@ -51,7 +51,12 @@
     "save_close"          : "Save & Close",
     "close_no_save"       : "Close Without Saving",
     "close"               : "Close",
-    "about_us"            : "About Us"
+    "about"               : "About",
+    "about_us"            : "About Us",
+    "view_user"           : "View User",
+    "edit_user"           : "Edit User",
+    "id"                  : "ID",
+    "home"                : "Home"
   },
   "hld": {
     "search"              : "Search...",

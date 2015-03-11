@@ -74,9 +74,11 @@ body {
     margin-left: -123px;
 }
 
-.navbar-top-links .dropdown-user {
-    right: 0;
-    left: auto;
+@media(min-width:768px) {
+  .navbar-top-links .dropdown-user {
+      right: 0;
+      left: auto;
+  }
 }
 
 .sidebar .sidebar-nav.navbar-collapse {

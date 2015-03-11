@@ -9,9 +9,21 @@
     <div class="row">
         <div class="col-lg-12">
             <table ng-table="tableParams" class="table table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="header sortable" ng-class="{
+                                'sort-asc': tableParams.isSortBy('resource', 'asc'),
+                                'sort-desc': tableParams.isSortBy('resource', 'desc')
+                              }"
+                            ng-click="tableParams.sorting('resource', tableParams.isSortBy('resource', 'asc') ? 'desc' : 'asc')">
+                            <div i18n="txt.resource"></div>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr ng-repeat="resource in $data">
-                        <td class="vmiddle" data-title="'Resource'" sortable="'resource'" ng-bind="resource.name"></td>
+                        <td class="vmiddle" ng-bind="resource.name"></td>
                         <td class="vmiddle" style="width: 250px">
                             <select selectpicker multiple="multiple" data-ng-model="resource.permissions" data-ng-disabled="!permissions.roles.contains('update')">
                                 <option value="create" data-ng-selected="resource.permissions.indexOf('create') !== -1" i18n="txt.create"></option>

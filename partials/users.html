@@ -1,26 +1,45 @@
 <div class="wrapper" data-ng-show="user.loggedIn()">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Users</h1>
+            <h1 class="page-header" i18n="txt.users"></h1>
             <div ng-include="'partials/alert.html'"></div>
         </div>
     </div>
     <div class="row" loading="['tableLoaded']">
         <div class="col-lg-12">
             <table ng-table="tableParams" class="table table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="header sortable" ng-class="{
+                                'sort-asc': tableParams.isSortBy('id', 'asc'),
+                                'sort-desc': tableParams.isSortBy('id', 'desc')
+                              }"
+                            ng-click="tableParams.sorting('id', tableParams.isSortBy('id', 'asc') ? 'desc' : 'asc')">
+                            <div i18n="txt.id"></div>
+                        </th>
+                        <th class="header sortable" ng-class="{
+                                'sort-asc': tableParams.isSortBy('email', 'asc'),
+                                'sort-desc': tableParams.isSortBy('email', 'desc')
+                              }"
+                            ng-click="tableParams.sorting('email', tableParams.isSortBy('email', 'asc') ? 'desc' : 'asc')">
+                            <div i18n="txt.email"></div>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr ng-repeat="user in $data">
-                        <td class="vmiddle" data-title="'Id'" sortable="'id'">{{user.id}}</td>
-                        <td class="vmiddle" data-title="'Email'" sortable="'email'">{{user.email}}</td>
+                        <td class="vmiddle" ng-bind="user.id"></td>
+                        <td class="vmiddle" ng-bind="user.email"></td>
                         <td class="vmiddle" style="width: 50px">
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown">
                                     <span class="fa fa-chevron-down"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li data-ng-if="!permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}">View</a></li>
-                                    <li data-ng-if="permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}">Edit</a></li>
-                                    <li data-ng-if="permissions.users.contains('delete')" role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                                    <li data-ng-if="!permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}" i18n="txt.view"></a></li>
+                                    <li data-ng-if="permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/user/{{user.id}}" i18n="txt.edit"></a></li>
+                                    <li data-ng-if="permissions.users.contains('delete')" role="presentation"><a role="menuitem" tabindex="-1" href="#" i18n="txt.delete"></a></li>
                                 </ul>
                             </div>
                         </td>
