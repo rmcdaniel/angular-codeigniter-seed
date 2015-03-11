@@ -1,25 +1,37 @@
-<div class="wrapper" data-ng-show="user.loggedIn()">
+<div class="wrapper" ng-show="user.loggedIn()">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Roles</h1>
+            <h1 class="page-header" i18n="txt.roles"></h1>
             <div ng-include="'partials/alert.html'"></div>
         </div>
     </div>
     <div class="row" loading="['tableLoaded']">
         <div class="col-lg-12">
             <table ng-table="tableParams" class="table table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="header sortable" ng-class="{
+                                'sort-asc': tableParams.isSortBy('role', 'asc'),
+                                'sort-desc': tableParams.isSortBy('role', 'desc')
+                              }"
+                            ng-click="tableParams.sorting('role', tableParams.isSortBy('role', 'asc') ? 'desc' : 'asc')">
+                            <div i18n="txt.role"></div>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr ng-repeat="role in $data">
-                        <td class="vmiddle" data-title="'Role'" sortable="'role'">{{role}}</td>
+                        <td class="vmiddle" ng-bind="role"></td>
                         <td class="vmiddle" style="width: 50px">
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown">
                                     <span class="fa fa-chevron-down"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li data-ng-if="!permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}">View</a></li>
-                                    <li data-ng-if="permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}">Edit</a></li>
-                                    <li data-ng-if="permissions.users.contains('delete')" role="presentation"><a role="menuitem" tabindex="-1" href data-ng-click="deleteRole(role)">Delete</a></li>
+                                    <li ng-if="!permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="txt.view"></a></li>
+                                    <li ng-if="permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="txt.edit"></a></li>
+                                    <li ng-if="permissions.users.contains('delete')" role="presentation"><a role="menuitem" tabindex="-1" href ng-click="deleteRole(role)" i18n="txt.delete"></a></li>
                                 </ul>
                             </div>
                         </td>
@@ -31,9 +43,9 @@
     <div class="row" loading="['tableLoaded']">
         <div class="col-lg-12">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Role Name..." data-ng-model="input.role" data-ng-disabled="!permissions.roles.contains('create')">
+              <input type="text" class="form-control" i18n-placeholder="hld.role_name" ng-model="input.role" ng-disabled="!permissions.roles.contains('create')">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button" data-ng-click="addRole(input.role); input.role=''" data-ng-disabled="!permissions.roles.contains('create')">Add Role</button>
+                <button class="btn btn-default" type="button" ng-click="addRole(input.role); input.role=''" ng-disabled="!permissions.roles.contains('create')" i18n="txt.add_role"></button>
               </span>
             </div>
         </div>

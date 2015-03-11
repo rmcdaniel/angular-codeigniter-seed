@@ -1,4 +1,4 @@
-/* global angular, _ */
+/* global angular, _, i18n */
 'use strict';
 
 var controllers = angular.module('acs.controllers', []);
@@ -67,7 +67,7 @@ controllers.controller('login', ['$scope', '$location', '$http', '$window', 'ale
                 $window.location.reload();
             } else {
                 if (_.isEmpty(data.errors)) {
-                    data.errors = 'Please fill out the login form.';
+                    data.errors = i18n.t('msg.fill_out_login');
                 }
                 alerts.fail(data.errors);
             }
@@ -85,7 +85,7 @@ controllers.controller('register', ['$scope', '$location', '$http', 'alerts', fu
     $scope.register = function() {
         $scope.waiting = true;
         if ($scope.input.password != $scope.input.confirmation) {
-            alerts.fail('The passwords do not match.');
+            alerts.fail(i18n.t('msg.password_mismatch'));
             $scope.waiting = false;
             return;
         }
@@ -95,10 +95,11 @@ controllers.controller('register', ['$scope', '$location', '$http', 'alerts', fu
         }).success(function(data) {
             $scope.waiting = false;
             if (data.status) {
+                alerts.success(i18n.t('msg.registered'));
                 $location.path('login');
             } else {
                 if (_.isEmpty(data.errors)) {
-                    data.errors = 'Please fill out the login form.';
+                    data.errors = '';
                 }
                 alerts.fail(data.errors);
             }
@@ -186,6 +187,7 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
 
     $scope.alerts = alerts;
     $scope.input = {user: {roles: []}};
+    $scope.role_header = "'Role'";
 
     $scope.read = function() {
         $http.post('api/user/read', {
@@ -211,7 +213,7 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
                 } else {
                     $location.path('administrator/users');
                 }
-                $scope.alerts.success('User successfully updated.');
+                $scope.alerts.success(i18n.t('msg.user_updated'));
             } else {
                 $scope.alerts.fail(data.errors);
             }
@@ -220,12 +222,12 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
 
     $scope.addRole = function(role) {
         if (_.isEmpty(role)) {
-            alerts.fail('Please enter role name.');
+            alerts.fail(i18n.t('msg.enter_role_name'));
             return;
         }
         role = JSON.stringify(role.toLowerCase()).replace(/\W/g, '').trim();
         if (_.isEmpty(role)) {
-            alerts.fail('Please enter role name.');
+            alerts.fail(i18n.t('msg.enter_role_name'));
             return;
         }
         $scope.input.user.roles.push(role);
@@ -292,12 +294,12 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
 
     $scope.addRole = function(role) {
         if (_.isEmpty(role)) {
-            alerts.fail('Please enter role name.');
+            alerts.fail(i18n.t('msg.enter_role_name'));
             return;
         }
         role = JSON.stringify(role.toLowerCase()).replace(/\W/g, '').trim();
         if (_.isEmpty(role)) {
-            alerts.fail('Please enter role name.');
+            alerts.fail(i18n.t('msg.enter_role_name'));
             return;
         }
         $http.post('api/role/create', {
@@ -306,7 +308,7 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
         }).success(function(data) {
             if (data.status) {
                 $scope.tableParams.reload();
-                $scope.alerts.success('Role successfully added.');
+                $scope.alerts.success(i18n.t('msg.role_added'));
             } else {
                 $scope.alerts.fail(data.errors);
             }
@@ -320,7 +322,7 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
         }).success(function(data) {
             if (data.status) {
                 $scope.tableParams.reload();
-                $scope.alerts.success('Role successfully deleted.');
+                $scope.alerts.success(i18n.t('msg.role_deleted'));
             } else {
                 $scope.alerts.fail(data.errors);
             }
@@ -366,7 +368,7 @@ controllers.controller('role', ['$scope', '$location', '$http', '$routeParams', 
                     if ($scope.failCount) {
                         $scope.alerts.fail($scope.errors);
                     } else {
-                        $scope.alerts.success('Role successfully updated.');
+                        $scope.alerts.success(i18n.t('msg.role_updated'));
                     }
                 }
             });
@@ -377,7 +379,7 @@ controllers.controller('role', ['$scope', '$location', '$http', '$routeParams', 
         page: 1,
         count: 10,
         sorting: {
-            role: 'asc'
+            resource: 'asc'
         }
     }, {
         total: 0,

@@ -158,71 +158,42 @@ class ACL {
         return empty($result);
     }
     
-    static function registerClass($class) {
-        $acl = new ACL();
-		$acl->addRole('administrator');
-		$acl->addUserRoles(1, 'administrator');
-		$acl->addResource('Administrator');
-        $acl->addPermissions('administrator', 'Administrator', 'read');
-		$acl->addResource($class);
-        foreach (get_public_methods($class) as $method) {
-            if (($method !== '__construct') && ($method !== 'get_instance')) {
-        		$acl->addPermissions('administrator', $class, $method);
-            }
-        }
-    }
+    static function authenticate($resource = '', $permissions = '')
+    {
+        $ci = &get_instance();
+    	$ci->form_validation->set_rules('token', 'token', 'required');
+    	$validated = $ci->form_validation->run();
+    	if ($validated)
+    	{
+    		$token = $ci->input->post('token');
+    	    $token = JWT::decode($token, $ci->config->item('jwt_key'));
+    		if ($token == false)
+    		{
+    			$output['status'] = false;
+    			$output['errors'] = 'You must login first.';
+    			$ci->load->view('json', array('output' => $output));
+    		}
+    		else
+    		{
+    		    $acl = new ACL();
+    			if (!empty($permissions) && !$acl->isAllowed($token->id, $resource, $permissions))
+    			{
+    				$token = false;
+    				$output['status'] = false;
+    				$output['errors'] = 'You do not have access to that resource.';
+    				$ci->load->view('json', array('output' => $output));
+    				return false;
+    			}
+    			return $token;
+    		}
+    	}
+    	else
+    	{
+    		$output['status'] = false;
+    		$output['errors'] = validation_errors();
+    		$ci->load->view('json', array('output' => $output));
+    		return false;
+    	}
+    }    
 
-}
-
-function isAllowed($user, $resource, $permissions) {
-    $acl = new ACL();
-    return $acl->isAllowed($user, $resource, $permissions);
-}
-
-function get_public_methods($className) {
-    $returnArray = array();
-    foreach (get_class_methods($className) as $method) {
-        $reflect = new ReflectionMethod($className, $method);
-        if($reflect->isPublic()) {
-            array_push($returnArray, $method);
-        }
-    }
-    return $returnArray;
-}
-
-function authenticate($resource, $permissions)
-{
-    $ci = &get_instance();
-	$ci->form_validation->set_rules('token', 'token', 'required');
-	$validated = $ci->form_validation->run();
-	if ($validated)
-	{
-		$token = $ci->input->post('token');
-	    $token = JWT::decode($token, $ci->config->item('jwt_key'));
-		if ($token == false)
-		{
-			$output['status'] = false;
-			$output['errors'] = 'You must login first.';
-			$ci->load->view('json', array('output' => $output));
-		}
-		else
-		{
-			if (!empty($permissions) && !isAllowed($token->id, $resource, $permissions))
-			{
-				$token = false;
-				$output['status'] = false;
-				$output['errors'] = 'You do not have access to that resource.';
-				$ci->load->view('json', array('output' => $output));
-				return false;
-			}
-			return $token;
-		}
-	}
-	else
-	{
-		$output['status'] = false;
-		$output['errors'] = validation_errors();
-		$ci->load->view('json', array('output' => $output));
-		return false;
-	}
 }

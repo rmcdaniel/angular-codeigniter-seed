@@ -13,7 +13,7 @@ class Resources extends CI_Model {
         if ($limit < 0) return;
         if ($offset < 0) return;
         if (!in_array($direction, array('asc', 'desc'))) return;
-        if (!in_array($key, array('role'))) return;
+        if (!in_array($key, array('resource'))) return;
 
 		$acl = new ACL();
         $resources = $acl->resources();

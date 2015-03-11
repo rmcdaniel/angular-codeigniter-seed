@@ -2,15 +2,9 @@
 
 class Role extends CI_Controller {
 
-	public function __construct()
-	{
-	    parent::__construct();
-		ACL::registerClass(__CLASS__);
-	}
-
 	public function table()
 	{
-		$token = authenticate(__CLASS__, 'read');
+		$token = ACL::authenticate(__CLASS__, 'read');
 		if ($token == false) return;
 
 		$output = array();
@@ -35,7 +29,7 @@ class Role extends CI_Controller {
 
 	public function create()
 	{
-		$token = authenticate(__CLASS__, __FUNCTION__);
+		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
 		if ($token == false) return;
 
 		$output = array();
@@ -58,7 +52,7 @@ class Role extends CI_Controller {
 
 	public function read()
 	{
-		$token = authenticate(__CLASS__, __FUNCTION__);
+		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
 		if ($token == false) return;
 
 		$output = array();
@@ -84,7 +78,7 @@ class Role extends CI_Controller {
 
 	public function update()
 	{
-		$token = authenticate(__CLASS__, __FUNCTION__);
+		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
 		if ($token == false) return;
 
 		$output = array();
@@ -112,7 +106,7 @@ class Role extends CI_Controller {
 
 	public function delete()
 	{
-		$token = authenticate(__CLASS__, __FUNCTION__);
+		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
 		if ($token == false) return;
 
 		$output = array();

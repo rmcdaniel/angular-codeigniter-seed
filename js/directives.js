@@ -1,4 +1,4 @@
-/* global angular, _, Ladda */
+/* global angular, _, i18n, Ladda, Odometer */
 'use strict';
 
 angular.module('acs.directives', [])
@@ -16,12 +16,59 @@ angular.module('acs.directives', [])
         }
     };
 }])
+.directive('i18n', [function() {
+    return {
+        restrict: 'A',
+        priority: -1000,
+        link: function(scope, element, attrs) {
+            scope.$watch(function() {
+                return window._i18n;
+            }, function(newValue) {
+                if (newValue) {
+                    scope.$watch(function() {
+                        return attrs.i18n;
+                    }, function(newValue) {
+                        if (!_.isEmpty(newValue)) {
+                            element.html(i18n.t(newValue));
+                        }
+                    });
+                }
+            });
+            if (!window._i18n) {
+                i18n.init({
+                    load: 'current',
+                    fallbackLng: false
+                }, function() {
+                    window._i18n = true;
+                });
+            }
+        }
+    };
+}])
+.directive('i18nPlaceholder', [function() {
+    return {
+        restrict: 'A',
+        priority: -1000,
+        link: function(scope, element, attrs) {
+            scope.$watch(function() {
+                return window._i18n;
+            }, function(newValue) {
+                if (newValue) {
+                    scope.$watch(function() {
+                        return attrs.i18nPlaceholder;
+                    }, function(newValue) {
+                        element.attr('placeholder', i18n.t(newValue));
+                    });
+                }
+            });
+        }
+    };
+}])
 .directive('loading', [function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs, ngModel) {
             var loaders = ['loaded'].concat(scope.$eval(attrs.loading));
-            
             var watch = function(newValue) {
                 if (_.every(loaders, function(loader) {
                     return ((loader == '') || (_.isUndefined(loader))) ? true : scope.$eval(loader);
@@ -33,7 +80,6 @@ angular.module('acs.directives', [])
                     jQuery(element).addClass('loading');
                 }
             };
-
             _.forEach(loaders, function(loader) {
                 scope.$watch(loader, watch);
             });
@@ -44,12 +90,31 @@ angular.module('acs.directives', [])
     return {
         require: 'ngModel',
         restrict: 'A',
+        priority: 10,
         link: function(scope, element, attrs, ngModel) {
-            jQuery(element).selectpicker();
             scope.$watch(function() {
-                return ngModel.$modelValue;
+                return window._i18n;
             }, function(newValue) {
-                jQuery(element).selectpicker('refresh');
+                if (newValue) {
+                    scope.$watch(function() {
+                        return element.attr('selectpicker-ready');
+                    }, function(newValue) {
+                        if (newValue) {
+                            jQuery(element).selectpicker();
+                            scope.$watch(function() {
+                                return ngModel.$modelValue;
+                            }, function(newValue) {
+                                jQuery(element).selectpicker('refresh');
+                            });
+                            scope.$watch(function() {
+                                return scope.$eval(attrs.options);
+                            }, function(newVal) {
+                                jQuery(element).selectpicker('refresh');
+                            });
+                        }
+                    });
+                    element.attr('selectpicker-ready', true);
+                }
             });
         }
     };
@@ -59,22 +124,49 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1,
         link: function(scope, element, attrs) {
-            var ladda = Ladda.create(element[0]);
-
-            element.addClass('ladda-button');
-            element.attr('data-style', 'expand-right');
-            element.attr('data-size', 1);
-
             scope.$watch(function() {
-                return scope.$eval(attrs.ladda);
+                return window._i18n;
             }, function(newValue) {
                 if (newValue) {
-                    ladda.start();
-                } else {
-                    ladda.stop();                    
+                    var ladda = Ladda.create(element[0]);
+                    element.addClass('ladda-button');
+                    element.attr('data-style', 'expand-right');
+                    element.attr('data-size', 1);
+                    scope.$watch(function() {
+                        return scope.$eval(attrs.ladda);
+                    }, function(newValue) {
+                        if (newValue) {
+                            ladda.start();
+                        } else {
+                            ladda.stop();                    
+                        }
+                    });
                 }
             });
-
+        }
+    };
+}])
+.directive('confirm', [function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('click', function(event) {
+                if (window.confirm(i18n.t('msg.sure'))) {
+                    scope.$eval(attrs.confirm);
+                }
+            });
+        }
+    };
+}])
+.directive('odometer', [function() {
+    return {
+        restrict: 'A',
+        priority: -1,
+        link: function(scope, element, attrs) {
+            var odometer = new Odometer({el: element[0]});
+            scope.$watch(attrs.odometer, function(newVal) {
+              odometer.update(newVal);
+            });
         }
     };
 }]);

@@ -2,12 +2,6 @@
 
 class User extends CI_Controller {
 
-	public function __construct()
-	{
-	    parent::__construct();
-		ACL::registerClass(__CLASS__);
-	}
-
 	public function login()
 	{
 		$output = array();
@@ -61,20 +55,10 @@ class User extends CI_Controller {
 		}
 		$this->load->view('json', array('output' => $output));
 	}
-	
-	public function information() {
-		$token = authenticate(__CLASS__, __FUNCTION__);
-		if ($token == false) return;
-
-		$output = array();
-		$output['status'] = true;
-		$output['message'] = 'Hello!';
-		$this->load->view('json', array('output' => $output));
-	}
 
 	public function permissions()
 	{
-		$token = authenticate('', '');
+		$token = ACL::authenticate();
 		if ($token == false) return;
 
 		$output = array();
@@ -100,7 +84,7 @@ class User extends CI_Controller {
 
 	public function table()
 	{
-		$token = authenticate(__CLASS__, 'read');
+		$token = ACL::authenticate(__CLASS__, 'read');
 		if ($token == false) return;
 
 		$output = array();
@@ -122,14 +106,10 @@ class User extends CI_Controller {
 		}
 		$this->load->view('json', array('output' => $output));
 	}
-
-	public function create()
-	{
-	}
 	
 	public function read()
 	{
-		$token = authenticate(__CLASS__, __FUNCTION__);
+		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
 		if ($token == false) return;
 
 		$output = array();
@@ -153,7 +133,7 @@ class User extends CI_Controller {
 
 	public function update()
 	{
-		$token = authenticate(__CLASS__, __FUNCTION__);
+		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
 		if ($token == false) return;
 
 		$output = array();
@@ -173,10 +153,6 @@ class User extends CI_Controller {
 			$output['errors'] = validation_errors();
 		}
 		$this->load->view('json', array('output' => $output));
-	}
-
-	public function delete()
-	{
 	}
 	
 }

@@ -1,3 +1,4 @@
+/* global angular, i18n */
 'use strict';
 
 angular.module('acs', ['acs.filters', 'acs.services', 'acs.directives', 'acs.controllers', 'ngRoute', 'ui.bootstrap', 'ngTable']).
