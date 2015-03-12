@@ -8,13 +8,6 @@
 - User manager
 - Role-based ACL
 
-## Installation
-
-````
-php api/index.php cli install
-php api/index.php cli add administrator foo@bar.com password123
-````
-
 ## Requires
 
 mcrypt
@@ -23,4 +16,11 @@ mcrypt
 sudo apt-get install php5-mcrypt
 sudo php5enmod mcrypt
 sudo service apache2 restart
+````
+
+## Installation
+
+````
+php api/index.php cli install
+php api/index.php cli add administrator foo@bar.com password123
 ````
