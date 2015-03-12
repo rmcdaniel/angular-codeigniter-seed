@@ -12,7 +12,6 @@
 
 ````
 php api/index.php cli install
-
 php api/index.php cli add administrator foo@bar.com password123
 ````
 
