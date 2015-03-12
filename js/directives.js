@@ -1,4 +1,4 @@
-/* global angular, _, i18n, Ladda, Odometer */
+/* global _, angular, i18n, Ladda, Odometer */
 'use strict';
 
 angular.module('acs.directives', [])
@@ -21,25 +21,25 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1000,
         link: function(scope, element, attrs) {
-            scope.$watch(function() {
-                return window._i18n;
+            var unwatch = scope.$watch(function() {
+                return window._i18n_loaded;
             }, function(newValue) {
                 if (newValue) {
+                    unwatch();
                     scope.$watch(function() {
                         return attrs.i18n;
                     }, function(newValue) {
-                        if (!_.isEmpty(newValue)) {
-                            element.html(i18n.t(newValue));
-                        }
+                        element.html(i18n.t(attrs.i18n));
                     });
                 }
             });
             if (!window._i18n) {
-                i18n.init({
+                window._i18n = i18n.init({
                     load: 'current',
                     fallbackLng: false
                 }, function() {
-                    window._i18n = true;
+                    window._i18n_loaded = true;
+                    scope.$apply();
                 });
             }
         }
@@ -50,10 +50,11 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1000,
         link: function(scope, element, attrs) {
-            scope.$watch(function() {
+            var unwatch = scope.$watch(function() {
                 return window._i18n;
             }, function(newValue) {
                 if (newValue) {
+                    unwatch();
                     scope.$watch(function() {
                         return attrs.i18nPlaceholder;
                     }, function(newValue) {
@@ -92,14 +93,16 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: 10,
         link: function(scope, element, attrs, ngModel) {
-            scope.$watch(function() {
+            var unwatch = scope.$watch(function() {
                 return window._i18n;
             }, function(newValue) {
                 if (newValue) {
-                    scope.$watch(function() {
+                    unwatch();
+                    unwatch = scope.$watch(function() {
                         return element.attr('selectpicker-ready');
                     }, function(newValue) {
                         if (newValue) {
+                            unwatch();
                             jQuery(element).selectpicker();
                             scope.$watch(function() {
                                 return ngModel.$modelValue;
@@ -124,10 +127,11 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1,
         link: function(scope, element, attrs) {
-            scope.$watch(function() {
+            var unwatch = scope.$watch(function() {
                 return window._i18n;
             }, function(newValue) {
                 if (newValue) {
+                    unwatch();
                     var ladda = Ladda.create(element[0]);
                     element.addClass('ladda-button');
                     element.attr('data-style', 'expand-right');
