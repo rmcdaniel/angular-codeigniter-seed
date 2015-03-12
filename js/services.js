@@ -7,7 +7,7 @@ factory('user', function($q, $http) {
         clear: function() {
             store.set('user', {});
         },
-        permissions: function(resource, permission) {
+        permissions: function(resource) {
             var deferred = $q.defer();
             var user = _.isUndefined(store.get('user')) ? {} : store.get('user');
             $http.post('api/user/permissions', {

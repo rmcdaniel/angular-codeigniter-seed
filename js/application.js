@@ -34,11 +34,6 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: 'partials/role.html'
     });
 
-    $routeProvider.when('/about', {
-        controller: 'about',
-        templateUrl: 'partials/about.html'
-    });
-
     $routeProvider.when('/login', {
         controller: 'login',
         templateUrl: 'partials/login.html'

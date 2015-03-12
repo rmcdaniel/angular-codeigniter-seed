@@ -1,7 +1,7 @@
 <div class="wrapper" ng-show="user.loggedIn()">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" i18n="txt.roles"></h1>
+            <h1 class="page-header" i18n="roles"></h1>
             <div ng-include="'partials/alert.html'"></div>
         </div>
     </div>
@@ -13,9 +13,8 @@
                         <th class="header sortable" ng-class="{
                                 'sort-asc': tableParams.isSortBy('role', 'asc'),
                                 'sort-desc': tableParams.isSortBy('role', 'desc')
-                              }"
-                            ng-click="tableParams.sorting('role', tableParams.isSortBy('role', 'asc') ? 'desc' : 'asc')">
-                            <div i18n="txt.role"></div>
+                              }" ng-click="tableParams.sorting('role', tableParams.isSortBy('role', 'asc') ? 'desc' : 'asc')">
+                            <div i18n="role"></div>
                         </th>
                         <th></th>
                     </tr>
@@ -29,9 +28,15 @@
                                     <span class="fa fa-chevron-down"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li ng-if="!permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="txt.view"></a></li>
-                                    <li ng-if="permissions.users.contains('update')" role="presentation"><a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="txt.edit"></a></li>
-                                    <li ng-if="permissions.users.contains('delete')" role="presentation"><a role="menuitem" tabindex="-1" href ng-click="deleteRole(role)" i18n="txt.delete"></a></li>
+                                    <li ng-if="!permissions.users.contains('update')" role="presentation">
+                                        <a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="view"></a>
+                                    </li>
+                                    <li ng-if="permissions.users.contains('update')" role="presentation">
+                                        <a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="edit"></a>
+                                    </li>
+                                    <li ng-if="permissions.users.contains('delete')" role="presentation">
+                                        <a role="menuitem" tabindex="-1" href ng-click="deleteRole(role)" i18n="delete"></a>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
@@ -43,9 +48,9 @@
     <div class="row" loading="['tableLoaded']">
         <div class="col-lg-12">
             <div class="input-group">
-              <input type="text" class="form-control" i18n-placeholder="hld.role_name" ng-model="input.role" ng-disabled="!permissions.roles.contains('create')">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="addRole(input.role); input.role=''" ng-disabled="!permissions.roles.contains('create')" i18n="txt.add_role"></button>
+                <input type="text" class="form-control" i18n-placeholder="role_name" ng-model="input.role" ng-disabled="!permissions.roles.contains('create')">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="addRole(input.role); input.role=''" ng-disabled="!permissions.roles.contains('create')" i18n="add_role"></button>
               </span>
             </div>
         </div>

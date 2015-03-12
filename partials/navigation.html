@@ -1,33 +1,30 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-if="!active('/administrator')">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-if="!active('/administrator')">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only" i18n="txt.toggle_nav"></span>
+                <span class="sr-only" i18n="toggle_nav"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" i18n="app.name"></a>
+            <a class="navbar-brand" href="#" i18n="name"></a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li data-ng-class="{ active: active('/home')}">
-                    <a href="#/home" i18n="txt.home"></a>
+            <ul class="nav navbar-nav" ng-switch="user.loggedIn()">
+                <li ng-class="{ active: active('/home')}">
+                    <a href="#/home" i18n="home"></a>
                 </li>
-                <li data-ng-hide="user.loggedIn()" data-ng-class="{ active: active('/login')}">
-                    <a href="#/login" i18n="txt.login"></a>
+                <li ng-switch-when="false" ng-class="{ active: active('/login')}">
+                    <a href="#/login" i18n="login"></a>
                 </li>
-                <li data-ng-hide="user.loggedIn()" data-ng-class="{ active: active('/register')}">
-                    <a href="#/register" i18n="txt.register"></a>
+                <li ng-switch-when="false" ng-class="{ active: active('/register')}">
+                    <a href="#/register" i18n="register"></a>
                 </li>
-                <li data-ng-show="user.loggedIn()">
-                    <a href="#/administrator" i18n="txt.admin_panel"></a>
+                <li ng-switch-when="true" ng-if="permissions.administrator.contains('read')">
+                    <a href="#/administrator" i18n="admin_panel"></a>
                 </li>
-                <li data-ng-show="user.loggedIn()">
-                    <a href data-ng-click="logout()" i18n="txt.logout"></a>
-                </li>
-                <li data-ng-class="{ active: active('/about')}">
-                    <a href="#/about" i18n="txt.about"></a>
+                <li ng-switch-when="true">
+                    <a href ng-click="logout()" i18n="logout"></a>
                 </li>
             </ul>
         </div>

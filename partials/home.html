@@ -1,15 +1,15 @@
 <div class="content">
     <div class="jumbotron">
         <h1>Hello,
-            <span data-ng-hide="user.token">world</span>
-            <span data-ng-show="user.token">{{user.email}}</span>!
+            <span ng-hide="user.token">world</span>
+            <span ng-show="user.token">{{user.email}}</span>!
         </h1>
         <p>This is a template for a simple marketing or informational website. It
             includes a large callout called a jumbotron and three supporting pieces
             of content. Use it as a starting point to create something more unique.
         </p>
-        <p data-ng-show="user.token">
-            <button class="btn btn-primary btn-lg" data-ng-click="information()">Test API Call</button>
+        <p ng-show="user.token">
+            <button class="btn btn-primary btn-lg" ng-click="information()">Test API Call</button>
         </p>
     </div>
     <div class="page-header">

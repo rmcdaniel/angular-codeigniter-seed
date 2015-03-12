@@ -1,23 +1,33 @@
-/* global angular, _, i18n */
+/* global _, angular, i18n */
 'use strict';
 
 var controllers = angular.module('acs.controllers', []);
 
-controllers.controller('base', ['$scope', '$location', '$q', 'user', function($scope, $location, $q, user) {
+controllers.controller('root', ['$scope', '$location', '$q', 'user', function($scope, $location, $q, user) {
 
     $scope.loaded = false;
     $scope.user = user;
     $scope.permissions = {};
 
     $scope.init = function() {
+        if (!user.loggedIn()) {
+            $scope.loaded = true;
+            return;
+        }
+
         var promises = [];
+
+        promises.push(user.permissions('administrator')
+        .then(function(permissions) {
+            $scope.permissions.administrator = permissions;
+        }));
     
-        promises.push(user.permissions('user', 'read')
+        promises.push(user.permissions('user')
         .then(function(permissions) {
             $scope.permissions.users = permissions;
         }));
     
-        promises.push(user.permissions('role', 'read')
+        promises.push(user.permissions('role')
         .then(function(permissions) {
             $scope.permissions.roles = permissions;
         }));
@@ -44,6 +54,14 @@ controllers.controller('base', ['$scope', '$location', '$q', 'user', function($s
 controllers.controller('navigation', ['$scope', '$location', 'user', function($scope, $location, user) {
 
     $scope.user = user;
+
+    $scope.navigation = function() {
+        if ($scope.active('/administrator') && user.loggedIn()) {
+            return 'partials/navigation-administrator.html';
+        } else {
+            return 'partials/navigation.html';
+        }
+    };
     
 }]);
 
@@ -63,11 +81,11 @@ controllers.controller('login', ['$scope', '$location', '$http', '$window', 'ale
             if (data.status) {
                 user.setEmail(data.email);
                 user.setToken(data.token);
-                $location.path('administrator');
+                $location.path('home');
                 $window.location.reload();
             } else {
                 if (_.isEmpty(data.errors)) {
-                    data.errors = i18n.t('msg.fill_out_login');
+                    data.errors = i18n.t('fill_out_login');
                 }
                 alerts.fail(data.errors);
             }
@@ -79,13 +97,12 @@ controllers.controller('login', ['$scope', '$location', '$http', '$window', 'ale
 controllers.controller('register', ['$scope', '$location', '$http', 'alerts', function($scope, $location, $http, alerts) {
 
     $scope.alerts = alerts;
-
     $scope.input = {};
 
     $scope.register = function() {
         $scope.waiting = true;
         if ($scope.input.password != $scope.input.confirmation) {
-            alerts.fail(i18n.t('msg.password_mismatch'));
+            alerts.fail(i18n.t('passwords_not_match'));
             $scope.waiting = false;
             return;
         }
@@ -95,7 +112,7 @@ controllers.controller('register', ['$scope', '$location', '$http', 'alerts', fu
         }).success(function(data) {
             $scope.waiting = false;
             if (data.status) {
-                alerts.success(i18n.t('msg.registered'));
+                alerts.success(i18n.t('you_may_login'));
                 $location.path('login');
             } else {
                 if (_.isEmpty(data.errors)) {
@@ -111,17 +128,6 @@ controllers.controller('register', ['$scope', '$location', '$http', 'alerts', fu
 controllers.controller('home', ['$scope', '$location', '$http', 'user', function($scope, $location, $http, user) {
 
     $scope.user = user;
-    
-    $scope.information = function() {
-        $http.post('api/user/information', {
-            token: $scope.user.token
-        }).success(function(data) {
-            if (data.status) {
-                alert(data.message);
-            } else {
-            }
-        });
-    };
 
 }]);
 
@@ -145,14 +151,8 @@ controllers.controller('administrator', ['$scope', '$location', '$http', 'user',
 controllers.controller('users', ['$scope', '$location', '$http', 'user', 'alerts', 'ngTableParams', function($scope, $location, $http, user, alerts, ngTableParams) {
 
     $scope.user = user;
-    $scope.tableLoaded = false;
-    
-    if (!$scope.user.loggedIn()) {
-        $location.path('login');
-        return;
-    }
-
     $scope.alerts = alerts;
+    $scope.tableLoaded = false;
 
     $scope.tableParams = new ngTableParams({
         page: 1,
@@ -179,15 +179,8 @@ controllers.controller('users', ['$scope', '$location', '$http', 'user', 'alerts
 controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$routeParams', 'user', 'alerts', 'ngTableParams', function($scope, $timeout, $location, $http, $routeParams, user, alerts, ngTableParams) {
 
     $scope.user = user;
-    
-    if (!$scope.user.loggedIn()) {
-        $location.path('login');
-        return;
-    }
-
     $scope.alerts = alerts;
     $scope.input = {user: {roles: []}};
-    $scope.role_header = "'Role'";
 
     $scope.read = function() {
         $http.post('api/user/read', {
@@ -213,7 +206,7 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
                 } else {
                     $location.path('administrator/users');
                 }
-                $scope.alerts.success(i18n.t('msg.user_updated'));
+                $scope.alerts.success(i18n.t('user_updated'));
             } else {
                 $scope.alerts.fail(data.errors);
             }
@@ -222,12 +215,12 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
 
     $scope.addRole = function(role) {
         if (_.isEmpty(role)) {
-            alerts.fail(i18n.t('msg.enter_role_name'));
+            alerts.fail(i18n.t('enter_role_name'));
             return;
         }
         role = JSON.stringify(role.toLowerCase()).replace(/\W/g, '').trim();
         if (_.isEmpty(role)) {
-            alerts.fail(i18n.t('msg.enter_role_name'));
+            alerts.fail(i18n.t('enter_role_name'));
             return;
         }
         $scope.input.user.roles.push(role);
@@ -262,15 +255,9 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
 controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts', 'ngTableParams', function($scope, $location, $http, user, alerts, ngTableParams) {
 
     $scope.user = user;
-    $scope.tableLoaded = false;
-    
-    if (!$scope.user.loggedIn()) {
-        $location.path('login');
-        return;
-    }
-
     $scope.alerts = alerts;
     $scope.input = {};
+    $scope.tableLoaded = false;
 
     $scope.tableParams = new ngTableParams({
         page: 1,
@@ -294,12 +281,12 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
 
     $scope.addRole = function(role) {
         if (_.isEmpty(role)) {
-            alerts.fail(i18n.t('msg.enter_role_name'));
+            alerts.fail(i18n.t('enter_role_name'));
             return;
         }
         role = JSON.stringify(role.toLowerCase()).replace(/\W/g, '').trim();
         if (_.isEmpty(role)) {
-            alerts.fail(i18n.t('msg.enter_role_name'));
+            alerts.fail(i18n.t('enter_role_name'));
             return;
         }
         $http.post('api/role/create', {
@@ -308,7 +295,7 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
         }).success(function(data) {
             if (data.status) {
                 $scope.tableParams.reload();
-                $scope.alerts.success(i18n.t('msg.role_added'));
+                $scope.alerts.success(i18n.t('role_added'));
             } else {
                 $scope.alerts.fail(data.errors);
             }
@@ -322,7 +309,7 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
         }).success(function(data) {
             if (data.status) {
                 $scope.tableParams.reload();
-                $scope.alerts.success(i18n.t('msg.role_deleted'));
+                $scope.alerts.success(i18n.t('role_deleted'));
             } else {
                 $scope.alerts.fail(data.errors);
             }
@@ -334,12 +321,6 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
 controllers.controller('role', ['$scope', '$location', '$http', '$routeParams', 'user', 'alerts', 'ngTableParams', function($scope, $location, $http, $routeParams, user, alerts, ngTableParams) {
 
     $scope.user = user;
-    
-    if (!$scope.user.loggedIn()) {
-        $location.path('login');
-        return;
-    }
-
     $scope.alerts = alerts;
     $scope.input = {resources: []};
     $scope.updateCount = 0;
@@ -368,7 +349,7 @@ controllers.controller('role', ['$scope', '$location', '$http', '$routeParams', 
                     if ($scope.failCount) {
                         $scope.alerts.fail($scope.errors);
                     } else {
-                        $scope.alerts.success(i18n.t('msg.role_updated'));
+                        $scope.alerts.success(i18n.t('role_updated'));
                     }
                 }
             });

@@ -1,12 +1,12 @@
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" data-ng-if="user.loggedIn() && active('/administrator')">
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only" i18n="txt.toggle_nav"></span>
+            <span class="sr-only" i18n="toggle_nav"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#/administrator" i18n="txt.admin_panel"></a>
+        <a class="navbar-brand" href="#/administrator" i18n="admin_panel"></a>
     </div>
     <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
@@ -14,12 +14,12 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> <span i18n="txt.user_profile"></span></a>
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> <span i18n="user_profile"></span></a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> <span i18n="txt.settings"></span></a>
+                <li><a href="#"><i class="fa fa-gear fa-fw"></i> <span i18n="settings"></span></a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#" data-ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> <span i18n="txt.logout"></span></a>
+                <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> <span i18n="logout"></span></a>
                 </li>
             </ul>
         </li>
@@ -29,7 +29,7 @@
             <ul class="nav" id="side-menu" menu>
                 <li class="sidebar-search">
                     <div class="input-group custom-search-form">
-                        <input type="text" class="form-control" i18n-placeholder="hld.search">
+                        <input type="text" class="form-control" i18n-placeholder="search">
                         <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                             <i class="fa fa-search"></i>
@@ -38,16 +38,16 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#/administrator"><i class="fa fa-dashboard fa-fw"></i> <span i18n="txt.dashboard"></span></a>
+                    <a href="#/administrator"><i class="fa fa-dashboard fa-fw"></i> <span i18n="dashboard"></span></a>
                 </li>
-                <li data-ng-if="permissions.users.contains('read')">
-                    <a href="#/administrator/users"><i class="fa fa-users fa-fw"></i> <span i18n="txt.users"></a>
+                <li ng-if="permissions.users.contains('read')">
+                    <a href="#/administrator/users"><i class="fa fa-users fa-fw"></i> <span i18n="users"></a>
                 </li>
-                <li data-ng-if="permissions.roles.contains('read')">
-                    <a href="#/administrator/roles"><i class="fa fa-legal fa-fw"></i> <span i18n="txt.roles"></a>
+                <li ng-if="permissions.roles.contains('read')">
+                    <a href="#/administrator/roles"><i class="fa fa-legal fa-fw"></i> <span i18n="roles"></a>
                 </li>
                 <li>
-                    <a href="#/home"><i class="fa fa-home fa-fw"></i> <span i18n="txt.view_frontend"></a>
+                    <a href="#/home"><i class="fa fa-home fa-fw"></i> <span i18n="view_frontend"></a>
                 </li>
             </ul>
         </div>
