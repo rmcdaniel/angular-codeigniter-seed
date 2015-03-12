@@ -10,7 +10,9 @@
 
 ## Demo
 
-User: foo@bar.com
+https://bitlab.co/acs
+
+User: foo@bar.com  
 Pass: password123
 
 The demo resets every hour.
