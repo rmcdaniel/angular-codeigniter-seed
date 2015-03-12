@@ -8,6 +8,7 @@ controllers.controller('root', ['$scope', '$location', '$q', 'user', function($s
     $scope.loaded = false;
     $scope.user = user;
     $scope.permissions = {};
+    $scope.waiting = false;
 
     $scope.init = function() {
         if (!user.loggedIn()) {
@@ -69,7 +70,6 @@ controllers.controller('login', ['$scope', '$location', '$http', '$window', 'ale
 
     $scope.alerts = alerts;
     $scope.input = {};
-    $scope.waiting = false;
 
     $scope.login = function() {
         $scope.waiting = true;

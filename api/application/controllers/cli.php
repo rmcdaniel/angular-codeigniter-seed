@@ -1,9 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Install extends CI_Controller {
+class CLI extends CI_Controller {
 
-	public function index()
+	public function install()
 	{
+		if (!$this->input->is_cli_request()) return;
+		
 		$this->load->dbforge();
 
 		// create acl table
@@ -68,9 +70,22 @@ class Install extends CI_Controller {
         // ...
         // ... add your custom resources to protect here
         // ...
+        
+        echo "installed\r\n";
+	}
+
+	public function add($type, $email, $password)
+	{
+		if (!$this->input->is_cli_request()) return;
+
+		if ($type == 'user') {
+			$this->Users->register($email, $password);
+	
+	        echo "user added\r\n";
+		}
 	}
 	
 }
 
-/* End of file install.php */
-/* Location: ./application/controllers/install.php */
+/* End of file cli.php */
+/* Location: ./application/controllers/cli.php */

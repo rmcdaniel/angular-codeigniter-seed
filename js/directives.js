@@ -89,6 +89,9 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1,
         link: function(scope, element, attrs) {
+            if (!_.isEmpty(attrs.i18nLadda)) {
+                element.html(i18n.t(attrs.i18nLadda));
+            }
             var ladda = Ladda.create(element[0]);
             element.addClass('ladda-button');
             element.attr('data-style', 'expand-right');
