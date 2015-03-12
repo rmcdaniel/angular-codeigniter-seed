@@ -26,6 +26,7 @@ class Users extends CI_Model {
 		$this->db->set('email',  $email);
 		$this->db->set('password', create_hash($password));
 		$this->db->insert('users');
+		return $this->db->insert_id();
 	}
 
     public function table($params)

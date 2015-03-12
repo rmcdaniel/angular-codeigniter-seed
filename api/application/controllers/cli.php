@@ -47,22 +47,18 @@ class CLI extends CI_Controller {
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('users');
 		
-		// create administrator role and make the first use an administrator
-        $acl = new ACL();
-		$acl->addRole('administrator');
-		$acl->addUserRoles(1, 'administrator');
-
 		// default resources to protect
+        $acl = new ACL();
 		$acl->addResource('administrator');
-        $acl->addPermissions('administrator', 'administrator', 'read');
-
 		$acl->addResource('user');
-        $acl->addPermissions('administrator', 'user', ['create', 'read', 'update', 'delete']);
-
 		$acl->addResource('role');
-        $acl->addPermissions('administrator', 'role', ['create', 'read', 'update', 'delete']);
-
 		$acl->addResource('resource');
+
+		// create administrator role and grant all access
+		$acl->addRole('administrator');
+        $acl->addPermissions('administrator', 'administrator', 'read');
+        $acl->addPermissions('administrator', 'user', ['create', 'read', 'update', 'delete']);
+        $acl->addPermissions('administrator', 'role', ['create', 'read', 'update', 'delete']);
         $acl->addPermissions('administrator', 'resource', ['create', 'read', 'update', 'delete']);
         
         // custom resources
@@ -78,10 +74,19 @@ class CLI extends CI_Controller {
 	{
 		if (!$this->input->is_cli_request()) return;
 
-		if ($type == 'user') {
+		if ($type == 'user')
+		{
 			$this->Users->register($email, $password);
 	
 	        echo "user added\r\n";
+		}
+		else if ($type == 'administrator')
+		{
+			$id = $this->Users->register($email, $password);
+	        $acl = new ACL();
+			$acl->addUserRoles($id, 'administrator');
+
+	        echo "administrator added\r\n";
 		}
 	}
 	

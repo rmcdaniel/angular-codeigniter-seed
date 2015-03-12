@@ -13,7 +13,7 @@
 ````
 php api/index.php cli install
 
-php api/index.php cli add user foo@bar.com password123
+php api/index.php cli add administrator foo@bar.com password123
 ````
 
 ## Requires
