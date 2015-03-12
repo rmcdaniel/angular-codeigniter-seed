@@ -21,27 +21,11 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1000,
         link: function(scope, element, attrs) {
-            var unwatch = scope.$watch(function() {
-                return window._i18n_loaded;
+            scope.$watch(function() {
+                return attrs.i18n;
             }, function(newValue) {
-                if (newValue) {
-                    unwatch();
-                    scope.$watch(function() {
-                        return attrs.i18n;
-                    }, function(newValue) {
-                        element.html(i18n.t(attrs.i18n));
-                    });
-                }
+                element.html(i18n.t(attrs.i18n));
             });
-            if (!window._i18n) {
-                window._i18n = i18n.init({
-                    load: 'current',
-                    fallbackLng: false
-                }, function() {
-                    window._i18n_loaded = true;
-                    scope.$apply();
-                });
-            }
         }
     };
 }])
@@ -50,17 +34,10 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1000,
         link: function(scope, element, attrs) {
-            var unwatch = scope.$watch(function() {
-                return window._i18n;
+            scope.$watch(function() {
+                return attrs.i18nPlaceholder;
             }, function(newValue) {
-                if (newValue) {
-                    unwatch();
-                    scope.$watch(function() {
-                        return attrs.i18nPlaceholder;
-                    }, function(newValue) {
-                        element.attr('placeholder', i18n.t(newValue));
-                    });
-                }
+                element.attr('placeholder', i18n.t(newValue));
             });
         }
     };
@@ -93,31 +70,16 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: 10,
         link: function(scope, element, attrs, ngModel) {
-            var unwatch = scope.$watch(function() {
-                return window._i18n;
+            jQuery(element).selectpicker();
+            scope.$watch(function() {
+                return ngModel.$modelValue;
             }, function(newValue) {
-                if (newValue) {
-                    unwatch();
-                    unwatch = scope.$watch(function() {
-                        return element.attr('selectpicker-ready');
-                    }, function(newValue) {
-                        if (newValue) {
-                            unwatch();
-                            jQuery(element).selectpicker();
-                            scope.$watch(function() {
-                                return ngModel.$modelValue;
-                            }, function(newValue) {
-                                jQuery(element).selectpicker('refresh');
-                            });
-                            scope.$watch(function() {
-                                return scope.$eval(attrs.options);
-                            }, function(newVal) {
-                                jQuery(element).selectpicker('refresh');
-                            });
-                        }
-                    });
-                    element.attr('selectpicker-ready', true);
-                }
+                jQuery(element).selectpicker('refresh');
+            });
+            scope.$watch(function() {
+                return scope.$eval(attrs.options);
+            }, function(newVal) {
+                jQuery(element).selectpicker('refresh');
             });
         }
     };
@@ -127,24 +89,17 @@ angular.module('acs.directives', [])
         restrict: 'A',
         priority: -1,
         link: function(scope, element, attrs) {
-            var unwatch = scope.$watch(function() {
-                return window._i18n;
+            var ladda = Ladda.create(element[0]);
+            element.addClass('ladda-button');
+            element.attr('data-style', 'expand-right');
+            element.attr('data-size', 1);
+            scope.$watch(function() {
+                return scope.$eval(attrs.ladda);
             }, function(newValue) {
                 if (newValue) {
-                    unwatch();
-                    var ladda = Ladda.create(element[0]);
-                    element.addClass('ladda-button');
-                    element.attr('data-style', 'expand-right');
-                    element.attr('data-size', 1);
-                    scope.$watch(function() {
-                        return scope.$eval(attrs.ladda);
-                    }, function(newValue) {
-                        if (newValue) {
-                            ladda.start();
-                        } else {
-                            ladda.stop();                    
-                        }
-                    });
+                    ladda.start();
+                } else {
+                    ladda.stop();                    
                 }
             });
         }
