@@ -170,7 +170,14 @@ class ACL {
     		if ($token == false)
     		{
     			$output['status'] = false;
-    			$output['errors'] = 'You must login first.';
+    			$output['errors'] = '{"type": "unathenticated"}';
+            	if (array_key_exists('errors', $output)) {
+            		$errors = explode("\n", $output['errors']);
+            		foreach ($errors as $key => $error) {
+            			$errors[$key] = json_decode($error);
+            		}
+            		$output['errors'] = $errors;
+            	}
     			$ci->load->view('json', array('output' => $output));
     		}
     		else
@@ -180,7 +187,14 @@ class ACL {
     			{
     				$token = false;
     				$output['status'] = false;
-    				$output['errors'] = 'You do not have access to that resource.';
+    				$output['errors'] = '{"type": "access"}';
+                	if (array_key_exists('errors', $output)) {
+                		$errors = explode("\n", $output['errors']);
+                		foreach ($errors as $key => $error) {
+                			$errors[$key] = json_decode($error);
+                		}
+                		$output['errors'] = $errors;
+                	}
     				$ci->load->view('json', array('output' => $output));
     				return false;
     			}
@@ -191,6 +205,13 @@ class ACL {
     	{
     		$output['status'] = false;
     		$output['errors'] = validation_errors();
+        	if (array_key_exists('errors', $output)) {
+        		$errors = explode("\n", $output['errors']);
+        		foreach ($errors as $key => $error) {
+        			$errors[$key] = json_decode($error);
+        		}
+        		$output['errors'] = $errors;
+        	}
     		$ci->load->view('json', array('output' => $output));
     		return false;
     	}

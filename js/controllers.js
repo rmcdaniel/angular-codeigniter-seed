@@ -87,7 +87,11 @@ controllers.controller('login', ['$scope', '$location', '$http', '$window', 'ale
                 if (_.isEmpty(data.errors)) {
                     data.errors = i18n.t('fill_out_login');
                 }
-                alerts.fail(data.errors);
+                _.forEach(data.errors, function(error) {
+                    if (error != null) {
+                        alerts.fail(i18n.s(error.type, error.field));
+                    }
+                });
             }
         });
     };
@@ -118,7 +122,11 @@ controllers.controller('register', ['$scope', '$location', '$http', 'alerts', fu
                 if (_.isEmpty(data.errors)) {
                     data.errors = '';
                 }
-                alerts.fail(data.errors);
+                _.forEach(data.errors, function(error) {
+                    if (error != null) {
+                        alerts.fail(i18n.s(error.type, error.field));
+                    }
+                });
             }
         });
     };
@@ -208,7 +216,11 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
                 }
                 $scope.alerts.success(i18n.t('user_updated'));
             } else {
-                $scope.alerts.fail(data.errors);
+                _.forEach(data.errors, function(error) {
+                    if (error != null) {
+                        alerts.fail(i18n.s(error.type, error.field));
+                    }
+                });
             }
         });
     };
@@ -297,7 +309,11 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
                 $scope.tableParams.reload();
                 $scope.alerts.success(i18n.t('role_added'));
             } else {
-                $scope.alerts.fail(data.errors);
+                _.forEach(data.errors, function(error) {
+                    if (error != null) {
+                        alerts.fail(i18n.s(error.type, error.field));
+                    }
+                });
             }
         });
     };
@@ -311,7 +327,11 @@ controllers.controller('roles', ['$scope', '$location', '$http', 'user', 'alerts
                 $scope.tableParams.reload();
                 $scope.alerts.success(i18n.t('role_deleted'));
             } else {
-                $scope.alerts.fail(data.errors);
+                _.forEach(data.errors, function(error) {
+                    if (error != null) {
+                        alerts.fail(i18n.s(error.type, error.field));
+                    }
+                });
             }
         });
     };
@@ -347,9 +367,13 @@ controllers.controller('role', ['$scope', '$location', '$http', '$routeParams', 
                         $location.path('administrator/roles');
                     }
                     if ($scope.failCount) {
-                        $scope.alerts.fail($scope.errors);
+                        _.forEach($scope.errors, function(error) {
+                            if (error != null) {
+                                alerts.fail(i18n.s(error.type, error.field));
+                            }
+                        });
                     } else {
-                        $scope.alerts.success(i18n.t('role_updated'));
+                        alerts.success(i18n.t('role_updated'));
                     }
                 }
             });

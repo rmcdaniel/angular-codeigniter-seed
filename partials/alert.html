@@ -1,4 +1,4 @@
-<div ng-repeat="alert in alerts.get() track by alert.timestamp">
+<div ng-repeat="alert in alerts.get() track by alert.id">
     <div ng-if="alert.success" class="alert alert-success" role="alert">{{alert.success}}</div>
     <div ng-if="alert.info" class="alert alert-info" role="alert">{{alert.info}}</div>
     <div ng-if="alert.warning" class="alert alert-warning" role="alert">{{alert.warning}}</div>

@@ -4,13 +4,9 @@ class User extends CI_Controller {
 
 	public function login()
 	{
-		$output = array();
-		$output['status'] = false;
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
-		$this->form_validation->set_error_delimiters('', '');
-		$validated = $this->form_validation->run();
-		if ($validated)
+		validate($this, '', '', function($token, $output)
 		{
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
@@ -24,49 +20,30 @@ class User extends CI_Controller {
 			}
 			else
 			{
-				$output['errors'] = 'The email/password combination entered is invalid.';
+				$output['errors'] = '{"type": "invalid"}';
 			}
-		}
-		else
-		{
-			$output['errors'] = validation_errors();
-		}
-		$this->load->view('json', array('output' => $output));
+			return $output;
+		});
 	}
-	
+
 	public function register()
 	{
-		$output = array();
-		$output['status'] = false;
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|is_unique[users.email]|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
-		$this->form_validation->set_error_delimiters('', '');
-		$validated = $this->form_validation->run();
-		if ($validated)
+		validate($this, '', '', function($token, $output)
 		{
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 			$this->Users->register($email, $password);
 			$output['status'] = true;
-		}
-		else
-		{
-			$output['errors'] = validation_errors();
-		}
-		$this->load->view('json', array('output' => $output));
+			return $output;
+		});
 	}
 
 	public function permissions()
 	{
-		$token = ACL::authenticate();
-		if ($token == false) return;
-
-		$output = array();
-		$output['status'] = false;
 		$this->form_validation->set_rules('resource', 'resource', 'required');
-		$this->form_validation->set_error_delimiters('', '');
-		$validated = $this->form_validation->run();
-		if ($validated)
+		validate($this, 'user', '', function($token, $output)
 		{
 			$resource = $this->input->post('resource');
 			$acl = new ACL();
@@ -74,85 +51,48 @@ class User extends CI_Controller {
 			$output['status'] = true;
 			$output['resource'] = $resource;
 			$output['permissions'] = $permissions;
-		}
-		else
-		{
-			$output['errors'] = validation_errors();
-		}
-		$this->load->view('json', array('output' => $output));
+			return $output;
+		});
 	}
 
 	public function table()
 	{
-		$token = ACL::authenticate(__CLASS__, 'read');
-		if ($token == false) return;
-
-		$output = array();
-		$output['status'] = false;
 		$this->form_validation->set_rules('params', 'params', 'required');
-		$this->form_validation->set_error_delimiters('', '');
-		$validated = $this->form_validation->run();
-		if ($validated)
+		validate($this, 'user', 'read', function($token, $output)
 		{
 			$params = json_decode(stripslashes($this->input->post('params')));
 			$table = $this->Users->table($params);
 			$output['status'] = true;
 	        $output['total'] = $table['total'];
 	        $output['users'] = $table['users'];
-		}
-		else
-		{
-			$output['errors'] = validation_errors();
-		}
-		$this->load->view('json', array('output' => $output));
+			return $output;
+		});
 	}
 	
 	public function read()
 	{
-		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
-		if ($token == false) return;
-
-		$output = array();
-		$output['status'] = false;
 		$this->form_validation->set_rules('id', 'id', 'required');
-		$this->form_validation->set_error_delimiters('', '');
-		$validated = $this->form_validation->run();
-		if ($validated)
+		validate($this, 'user', 'read', function($token, $output)
 		{
 			$id = $this->input->post('id');
 			$user = $this->Users->read($id);
 			$output['status'] = true;
 	        $output['user'] = $user;
-		}
-		else
-		{
-			$output['errors'] = validation_errors();
-		}
-		$this->load->view('json', array('output' => $output));
+			return $output;
+		});
 	}
 
 	public function update()
 	{
-		$token = ACL::authenticate(__CLASS__, __FUNCTION__);
-		if ($token == false) return;
-
-		$output = array();
-		$output['status'] = false;
 		$this->form_validation->set_rules('user', 'user', 'required');
-		$this->form_validation->set_error_delimiters('', '');
-		$validated = $this->form_validation->run();
-		if ($validated)
+		validate($this, 'user', 'update', function($token, $output)
 		{
 			$user = json_decode(stripslashes($this->input->post('user')));
 			$user = $this->Users->update($user);
 			$output['status'] = true;
 	        $output['user'] = $user;
-		}
-		else
-		{
-			$output['errors'] = validation_errors();
-		}
-		$this->load->view('json', array('output' => $output));
+			return $output;
+		});
 	}
 	
 }

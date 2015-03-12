@@ -78,11 +78,11 @@ factory('alerts', function($interval) {
             store.set('alerts', alerts);
         },
         success: function(msg) {
-            alerts.push({success: msg, timestamp: new Date().getTime()});
+            alerts.push({id: Math.random().toString(16), success: msg, timestamp: new Date().getTime()});
             store.set('alerts', alerts);
         },
         fail: function(msg) {
-            alerts.push({danger: msg, timestamp: new Date().getTime()});
+            alerts.push({id: Math.random().toString(16), danger: msg, timestamp: new Date().getTime()});
             store.set('alerts', alerts);
         }
     };
