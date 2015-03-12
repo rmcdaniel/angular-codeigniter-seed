@@ -10,6 +10,11 @@
 
 ## Demo
 
+User: foo@bar.com
+Pass: password123
+
+The demo resets every hour.
+
 ## Requires
 
 mcrypt
