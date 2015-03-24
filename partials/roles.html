@@ -35,7 +35,7 @@
                                         <a role="menuitem" tabindex="-1" href="#/administrator/role/{{role}}" i18n="edit"></a>
                                     </li>
                                     <li ng-if="permissions.users.contains('delete')" role="presentation">
-                                        <a role="menuitem" tabindex="-1" href ng-click="deleteRole(role)" i18n="delete"></a>
+                                        <a role="menuitem" tabindex="-1" href confirm="deleteRole(role)" i18n="delete"></a>
                                     </li>
                                 </ul>
                             </div>
