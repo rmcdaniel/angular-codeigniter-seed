@@ -27,6 +27,7 @@ class Role extends CI_Controller {
 			return $output;
 		});
 	}
+
 	public function read()
 	{
 		$this->form_validation->set_rules('role', 'role', 'required');

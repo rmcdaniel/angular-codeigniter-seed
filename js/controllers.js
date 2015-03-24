@@ -225,6 +225,17 @@ controllers.controller('user', ['$scope', '$timeout', '$location', '$http', '$ro
         });
     };
 
+    $scope.getRoles = function() {
+        $http.post('api/role/table', {
+            token: $scope.user.getToken(),
+            params: '{}'
+        }).success(function(data) {
+            if (data.status) {
+                $scope.roles = data.roles;
+            }
+        });
+    };
+
     $scope.addRole = function(role) {
         if (_.isEmpty(role)) {
             alerts.fail(i18n.t('enter_role_name'));

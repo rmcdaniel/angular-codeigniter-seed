@@ -4,17 +4,6 @@ class Roles extends CI_Model {
 
     public function table($params)
     {
-        $limit = intval($params->count);
-        $offset = intval(($params->page - 1) * $params->count);
-        $sorting = get_object_vars($params->sorting);
-        $direction = reset($sorting);
-        $key = key($sorting);
-        if ($limit > 100) return;
-        if ($limit < 0) return;
-        if ($offset < 0) return;
-        if (!in_array($direction, array('asc', 'desc'))) return;
-        if (!in_array($key, array('role'))) return;
-
 		$acl = new ACL();
         $roles = $acl->roles();
 

@@ -60,7 +60,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" i18n-placeholder="role_name" ng-model="input.role" ng-readonly="!permissions.users.contains('update')">
+                                            <input type="text" class="form-control" i18n-placeholder="role_name" ng-model="input.role" ng-readonly="!permissions.users.contains('update')" typeahead="role for role in roles | filter:$viewValue | limitTo:8" ng-init="getRoles()">
                                             <span class="input-group-btn">
                                         <button class="btn btn-default" type="button" ng-click="addRole(input.role); input.role=''" ng-disabled="!permissions.users.contains('update')" i18n="add_role"></button>
                                       </span>
