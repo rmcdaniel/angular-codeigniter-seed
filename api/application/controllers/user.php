@@ -94,7 +94,18 @@ class User extends CI_Controller {
 			return $output;
 		});
 	}
-	
+
+	public function delete()
+	{
+		$this->form_validation->set_rules('id', 'id', 'required');
+		validate($this, 'user', 'delete', function($token, $output)
+		{
+			$id = $this->input->post('id');
+			$this->Users->delete($id);
+			$output['status'] = true;
+			return $output;
+		});
+	}	
 }
 
 /* End of file user.php */

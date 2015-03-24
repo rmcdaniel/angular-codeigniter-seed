@@ -113,7 +113,14 @@ class Users extends CI_Model {
 
         return $user;
     }	
-	
+
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('users');
+        $this->db->limit(1);
+    }
+    
 }
 
 /* End of file users.php */

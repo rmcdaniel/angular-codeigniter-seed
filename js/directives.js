@@ -113,7 +113,7 @@ angular.module('acs.directives', [])
         restrict: 'A',
         link: function(scope, element, attrs) {
             element.bind('click', function(event) {
-                if (window.confirm(i18n.t('msg.sure'))) {
+                if (window.confirm(i18n.t('are_you_sure'))) {
                     scope.$eval(attrs.confirm);
                 }
             });

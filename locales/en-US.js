@@ -41,6 +41,7 @@ var i18n = {
     
         "users"                 : "Users",
         "user_updated"          : "User successfully updated.",
+        "user_deleted"          : "User successfully deleted.",
         "user_profile"          : "User Profile",
         "view_user"             : "View User",
         "edit_user"             : "Edit User",

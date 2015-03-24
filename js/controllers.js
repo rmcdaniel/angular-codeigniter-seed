@@ -162,6 +162,21 @@ controllers.controller('users', ['$scope', '$location', '$http', 'user', 'alerts
     $scope.alerts = alerts;
     $scope.tableLoaded = false;
 
+    $scope.delete = function(id) {
+        $http.post('api/user/delete', {
+            token: $scope.user.getToken(),
+            id: id
+        }).success(function(data) {
+            if (data.status) {
+                $scope.tableParams.reload();
+                $scope.alerts.success(i18n.t('user_delete'));
+                $scope.alerts.success('User successfully deleted.');
+            } else {
+                $scope.alerts.fail(data.errors);
+            }
+        });
+    };
+
     $scope.tableParams = new ngTableParams({
         page: 1,
         count: 10,
