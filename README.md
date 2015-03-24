@@ -8,13 +8,14 @@
 - User manager
 - Role-based ACL
 
-## Installation
+## Demo
 
-````
-php api/index.php cli install
+https://bitlab.co/acs
 
-php api/index.php cli add administrator foo@bar.com password123
-````
+User: foo@bar.com  
+Pass: password123
+
+The demo resets every hour.
 
 ## Requires
 
@@ -24,4 +25,11 @@ mcrypt
 sudo apt-get install php5-mcrypt
 sudo php5enmod mcrypt
 sudo service apache2 restart
+````
+
+## Installation
+
+````
+php api/index.php cli install
+php api/index.php cli add administrator foo@bar.com password123
 ````
