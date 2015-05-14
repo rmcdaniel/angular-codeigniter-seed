@@ -1,0 +1,41 @@
+{
+  "name": "sauce/sausage",
+  "type": "sauce-sausage",
+  "description": "PHP version of the Sauce Labs API",
+  "keywords": ["sauce", "saucelabs", "api", "testing", "phpunit", "selenium", "appium"],
+  "homepage": "http://github.com/jlipps/sausage",
+  "license": "Apache-2.0",
+  "authors": [{
+    "name": "Jonathan Lipps",
+    "email": "jlipps@saucelabs.com",
+    "homepage": "http://www.saucelabs.com",
+    "role": "Lead"
+  }],
+  "repositories": [
+      {
+          "type": "vcs",
+          "url": "https://github.com/appium/php-client"
+      }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": ">=4.5.1"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "sauce/sausage-installer": ">=0.1.0",
+    "phpunit/phpunit-selenium": ">=1.4.1",
+    "brianium/paratest": ">=0.12.1",
+    "appium/php-client": ">=0.1.0"
+  },
+  "suggest": {
+    "sauce/connect": ">=3.1"
+  },
+  "autoload": {
+    "psr-0": {"Sauce": "src/"}
+  },
+  "support": {
+    "email": "help@saucelabs.com",
+    "irc": "irc://irc.freenode.org/saucelabs"
+  },
+  "bin": ["bin/sauce_config"]
+}

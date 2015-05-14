@@ -1,0 +1,5 @@
+composer.phar
+vendor/
+composer.lock
+.sauce_config
+PHPUnitDemo.php

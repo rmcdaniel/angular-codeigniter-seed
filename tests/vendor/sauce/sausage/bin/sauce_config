@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+require_once dirname(__FILE__).'/../src/Sauce/Sausage/SauceConfig.php';
+
+use Sauce\Sausage\SauceConfig;
+
+$USAGE = "USAGE: sauce_config USERNAME ACCESS_KEY";
+
+if (!isset($argv[1]) || !isset($argv[2])) {
+    echo $USAGE;
+    exit(1);
+}
+
+SauceConfig::WriteConfig($argv[1], $argv[2]);
+echo "Successfully configured Sauce to use account ${argv[1]}\n";
+

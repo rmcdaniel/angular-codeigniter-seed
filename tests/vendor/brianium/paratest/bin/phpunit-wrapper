@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+echo "Worker starting\n";
+
+// git working copy
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
+// Composer installation
+if (file_exists(__DIR__ . '/../../../autoload.php')) {
+    require_once __DIR__ . '/../../../autoload.php';
+}
+
+$commands = fopen('php://stdin', 'r');
+$lastExitCode = 0;
+while (true) {
+    if (feof($commands)) {
+        exit($lastExitCode);
+    }
+    $command = (fgets($commands));
+    if ($command === false) {
+        exit($lastExitCode);
+    }
+    $command = rtrim($command);
+    if ($command === 'EXIT') {
+        echo "EXITED\n";
+        exit($lastExitCode);
+    }
+    echo "Executing: $command\n";
+
+    if (!preg_match_all('/\'([^\']*)\'[ ]?/', $command, $arguments)) {
+        throw new \Exception("Failed to parse arguments from command line: \"" . $command . "\"");
+    }
+    $_SERVER['argv'] = $arguments[1];
+
+    $lastExitCode = PHPUnit_TextUI_Command::main(false);
+    echo "FINISHED\n";
+}

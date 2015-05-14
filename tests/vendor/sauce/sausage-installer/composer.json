@@ -1,0 +1,19 @@
+{
+  "name": "sauce/sausage-installer",
+  "type": "composer-installer",
+  "homepage": "http://github.com/jlipps/sausage-installer",
+  "license": "Apache-2.0",
+  "authors": [{
+    "name": "Jonathan Lipps",
+    "email": "jlipps@saucelabs.com",
+    "homepage": "http://www.saucelabs.com",
+    "role": "Lead"
+  }],
+  "autoload": {
+    "psr-0": {"Sauce": "src/"}
+  },
+  "extra": {
+    "class": "Sauce\\Composer\\SausageInstaller"
+  }
+}
+

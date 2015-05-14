@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.10" version="2.0"
+  xmlns="http://pear.php.net/dtd/package-2.0"
+  xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+                      http://pear.php.net/dtd/tasks-1.0.xsd
+                      http://pear.php.net/dtd/package-2.0
+                      http://pear.php.net/dtd/package-2.0.xsd">
+  <name>PHPUnit_Appium</name>
+  <channel>pear.php.net</channel>
+  <summary>Appium integration for PHPUnit</summary>
+  <description>Appium integration for PHPUnit</description>
+  <lead>
+    <name>Isaac Murchie</name>
+    <user>imurchie</user>
+    <email>isaac@saucelabs.com</email>
+    <active>yes</active>
+  </lead>
+  <date>2014-04-21</date>
+  <version>
+    <release>0.0.1</release>
+    <api>0.1</api>
+  </version>
+  <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+  </stability>
+  <license>Apache 2.0</license>
+  <notes>http://github.com/sebastianbergmann/phpunit-selenium/blob/master/README.markdown</notes>
+  <contents>
+    <dir name="/">
+      <dir name="PHPUnit">
+        <dir name="Extensions">
+          <file baseinstalldir="/" name="AppiumTestCase.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info" />
+          </file>
+        </dir>
+      </dir>
+      <file baseinstalldir="/" name="LICENSE" role="doc"/>
+    </dir>
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+        <min>5.3.3</min>
+      </php>
+      <pearinstaller>
+        <min>1.9.4</min>
+      </pearinstaller>
+      <package>
+        <name>PHPUnit</name>
+        <channel>pear.phpunit.de</channel>
+        <min>3.7.0</min>
+      </package>
+      <extension>
+        <name>curl</name>
+      </extension>
+      <extension>
+        <name>dom</name>
+      </extension>
+    </required>
+  </dependencies>
+  <phprelease/>
+</package>
