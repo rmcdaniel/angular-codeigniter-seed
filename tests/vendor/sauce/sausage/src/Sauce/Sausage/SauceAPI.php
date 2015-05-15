@@ -32,12 +32,7 @@ class SauceAPI
     protected function makeRequest($url, $type="GET", $params=false)
     {
         $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
-
-        file_put_contents('/var/log/error', "hello\r\n", FILE_APPEND);
         if($this->verify_certs == false) {
-            file_put_contents('/var/log/error', "do not verify certs\r\n", FILE_APPEND);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
@@ -83,7 +78,8 @@ class SauceAPI
         $response = curl_exec($ch);
 
         if (curl_errno($ch))
-            throw new \Exception("Got an error while making a request: ".curl_error($ch));
+            // throw new \Exception("Got an error while making a request: ".curl_error($ch));
+            return '';
 
         curl_close($ch);
 
