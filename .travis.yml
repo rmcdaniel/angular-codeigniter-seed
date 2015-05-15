@@ -4,7 +4,7 @@ php:
     - '5.5'
     - '5.4'
 
-script: phpunit tests/WebDriverDemo.php
+script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/WebDriverDemo.php
 
 env:
     global:
