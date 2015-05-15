@@ -11,7 +11,7 @@ class Run extends Sauce\Sausage\WebDriverTestCase
         array(
             'browserName' => 'firefox',
             'desiredCapabilities' => array(
-                'version' => '38',
+                'version' => '15',
                 'platform' => 'Windows 2012',
             )
         ),
