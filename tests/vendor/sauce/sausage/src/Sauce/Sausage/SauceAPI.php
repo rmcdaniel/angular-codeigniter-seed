@@ -51,18 +51,18 @@ class SauceAPI
 
         // If user has ca bundle location specified in environment
         // set that same path on php curl connection
-        if (getenv('CURL_CA_BUNDLE')) {
-            curl_setopt($ch, CURLOPT_CAINFO, getenv('CURL_CA_BUNDLE'));
-        }
+        // if (getenv('CURL_CA_BUNDLE')) {
+            // curl_setopt($ch, CURLOPT_CAINFO, getenv('CURL_CA_BUNDLE'));
+        // }
         
         // If user has requested it, be extremely verbose when making requests.
         // This is primarily intended to help Sauce Support staff figure out what's
         // busted.
-        if (getenv('SAUCE_DIAGNOSE_SSL')) {
+        // if (getenv('SAUCE_DIAGNOSE_SSL')) {
             curl_setopt($ch, CURLOPT_CERTINFO, true);
             curl_setopt($ch, CURLOPT_VERBOSE, true);
-            curl_setopt($ch, CURLOPT_STDERR, getenv('SAUCE_DIAGNOSE_SSL'));
-        }
+            // curl_setopt($ch, CURLOPT_STDERR, getenv('SAUCE_DIAGNOSE_SSL'));
+        // }
 
         $headers = array();
         $headers[] = 'Content-Type: text/json';
