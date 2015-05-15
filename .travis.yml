@@ -1,7 +1,11 @@
 language: php
+
 php:
     - '5.5'
     - '5.4'
+
+script: phpunit tests/WebDriverDemo.php
+
 env:
     global:
         - secure: my2TT2Gq1b58eKJtiF9pg1WTr2Qj7V1TtB95JaJ0NPOmWaeC1yNEeGRDkxm+Exjq6OTaEtZjmbAmMVq9/37abCjS4uYYPplRb1yDKBSMV0LdEVeJCHGI7mwX8LPVbH7CbolPmE9zUwXud5/4+ZCgvAQ0TGe2/CIG7egJ/uZm4XM=
