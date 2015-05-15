@@ -32,10 +32,10 @@ class SauceAPI
     protected function makeRequest($url, $type="GET", $params=false)
     {
         $ch = curl_init();
-        if($this->verify_certs == false) {
+        // if($this->verify_certs == false) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        }
+        // }
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
