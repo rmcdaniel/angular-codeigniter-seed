@@ -17,6 +17,7 @@ before_script:
     - mysql -e 'create database acs;'
     - php api/index.php cli install
     - php api/index.php cli add administrator foo@bar.com password123
+    - chmod 777 /var/log/apache2/error.log
 
 script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/run.php
 
