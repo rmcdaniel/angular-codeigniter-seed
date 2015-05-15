@@ -75,7 +75,7 @@ class SauceAPI
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_1);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 
         $response = curl_exec($ch);
 
