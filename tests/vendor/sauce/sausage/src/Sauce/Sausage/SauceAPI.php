@@ -77,12 +77,8 @@ class SauceAPI
 
         $response = curl_exec($ch);
 
-        if (curl_errno($ch)) {
-            $msg = curl_error($ch);
-            if (strpos(strtolower($msg), 'tls packet') === false) {
-                throw new \Exception("Got an error while making a request: ".curl_error($ch));
-            }
-        }
+        if (curl_errno($ch))
+            throw new \Exception("Got an error while making a request: ".curl_error($ch));
 
         curl_close($ch);
 
