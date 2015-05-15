@@ -33,7 +33,7 @@ class SauceAPI
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_SSLVERSION, 5);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
 
         file_put_contents('/var/log/error', "hello\r\n", FILE_APPEND);
         if($this->verify_certs == false) {
