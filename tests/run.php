@@ -35,6 +35,13 @@ class Run extends Sauce\Sausage\WebDriverTestCase
         $this->byName('email')->value('foo@bar.com');
         $this->byName('password')->value('password123');
         $this->byName('login')->submit();
+        $this->url('http://localhost/#/administrator');
+
+        $this->url('http://localhost/#/login');
+        $this->byName('email')->value('foo@bar.com');
+        $this->byName('password')->value('password123');
+        $this->byName('login')->submit();
+
         $this->assertTextPresent("Logout");
         $this->assertTextNotPresent("Login");
     }
