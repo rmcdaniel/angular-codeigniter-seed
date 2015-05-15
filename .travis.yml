@@ -17,7 +17,7 @@ before_script:
    - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
    - sudo service apache2 restart
 
-script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/WebDriverDemo.php
+script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/run.php
 
 env:
     global:
