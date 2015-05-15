@@ -17,11 +17,12 @@ before_script:
     - mysql -e 'create database acs;'
     - php api/index.php cli install
     - php api/index.php cli add administrator foo@bar.com password123
-    - sudo chmod 777 /var/log/apache2/error.log
+    - sudo touch /var/log/error
+    - sudo chmod 777 /var/log/error
 
 script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/run.php
 
-after_script: sudo cat /var/log/apache2/error.log
+after_script: sudo cat /var/log/error
 
 env:
     global:
