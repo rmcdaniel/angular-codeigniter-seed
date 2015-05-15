@@ -10,5 +10,7 @@ env:
     global:
         - secure: my2TT2Gq1b58eKJtiF9pg1WTr2Qj7V1TtB95JaJ0NPOmWaeC1yNEeGRDkxm+Exjq6OTaEtZjmbAmMVq9/37abCjS4uYYPplRb1yDKBSMV0LdEVeJCHGI7mwX8LPVbH7CbolPmE9zUwXud5/4+ZCgvAQ0TGe2/CIG7egJ/uZm4XM=
         - secure: TckfdYl2c+D47wg6sMIe3JCvN6pSd0W0e3xGV2KQxn9zJUAYr2Ee+s8VjBGJ5QolcsjRGkhm36EPOMzmo+m6I707b189+rzBx0+UpnD9FUozvK1tCtu/ZqQ9lXfMFXX6pBXxpSxJp5BQ92meZbRpPuUKz4GiPEqUdEtLduaeM5s=
+        - SAUCE_TUNNEL_IDENTIFIER=$TRAVIS_JOB_NUMBER
+        - SAUCE_DONT_VERIFY_CERTS=1
 addons:
     sauce_connect: true
