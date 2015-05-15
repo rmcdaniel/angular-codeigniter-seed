@@ -35,6 +35,7 @@ class SauceAPI
         // if($this->verify_certs == false) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
         // }
 
         curl_setopt($ch, CURLOPT_URL, $url);
