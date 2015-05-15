@@ -38,8 +38,7 @@ EOF;
             }
 
             if(getenv('SAUCE_DONT_VERIFY_CERTS')) {
-                $env_sauce_dont_verify_certify = getenv('SAUCE_DONT_VERIFY_CERTS');
-                define('SAUCE_VERIFY_CERTS', empty($env_sauce_dont_verify_certify));
+                define('SAUCE_VERIFY_CERTS', false);
             } else {
                 define('SAUCE_VERIFY_CERTS', true);
             }
