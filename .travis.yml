@@ -17,7 +17,7 @@ before_script:
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
     - sudo service apache2 restart
     - mysql -e 'create database acs;'
-    - php api/index.php install
+    - php api/index.php cli install
 
 script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/run.php
 
