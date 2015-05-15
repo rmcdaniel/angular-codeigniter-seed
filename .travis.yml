@@ -18,6 +18,7 @@ before_script:
     - sudo service apache2 restart
     - mysql -e 'create database acs;'
     - php api/index.php cli install
+    - php api/index.php cli add administrator foo@bar.com password123
 
 script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/run.php
 
