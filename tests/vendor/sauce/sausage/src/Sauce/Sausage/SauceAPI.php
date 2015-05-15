@@ -32,6 +32,9 @@ class SauceAPI
     protected function makeRequest($url, $type="GET", $params=false)
     {
         $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_SSLVERSION, 1);
+
         if($this->verify_certs == false) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -74,8 +77,6 @@ class SauceAPI
         $headers[] = 'Content-length:'.strlen($data);
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 
         $response = curl_exec($ch);
 
