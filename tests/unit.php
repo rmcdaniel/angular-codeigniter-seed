@@ -10,10 +10,12 @@ class UnitTest extends PHPUnit_Framework_TestCase
 
     public function testLogin()
     {
-        $_POST['email'] = 'foo@bar.com';
-        $_POST['password'] = 'password123';
-        require_once(FCPATH . APPPATH . 'controllers/user.php');
-        $this->CI->User = new User();
-        echo $this->CI->User->login();
+        $email = 'foo@bar.com';
+        $password = 'password123';
+        $_POST['email'] = $email;
+        $_POST['password'] = $password;
+        $this->CI->User = load_controller('User');
+        $result = json_decode($this->CI->User->login())->output;
+        $this->assertEquals($result->email, $email);
     }
 }

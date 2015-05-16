@@ -610,3 +610,8 @@ if (defined('ENVIRONMENT'))
 
 /* End of file index.php */
 /* Location: ./index.php */
+
+function load_controller($class) {
+	require_once(FCPATH . APPPATH . 'controllers/' . strtolower($class) . '.php');
+	return new $class();
+}
