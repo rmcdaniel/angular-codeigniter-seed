@@ -2,6 +2,11 @@
 
 class CLI extends CI_Controller {
 
+	public function index()
+	{
+		// echo 'ok';
+	}
+
 	public function install()
 	{
 		if (!$this->input->is_cli_request()) return;

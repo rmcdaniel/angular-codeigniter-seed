@@ -6,7 +6,7 @@ class User extends CI_Controller {
 	{
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
-		validate($this, '', '', function($token, $output)
+		return validate($this, '', '', function($token, $output)
 		{
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
@@ -30,7 +30,7 @@ class User extends CI_Controller {
 	{
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|is_unique[users.email]|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
-		validate($this, '', '', function($token, $output)
+		return validate($this, '', '', function($token, $output)
 		{
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
@@ -43,7 +43,7 @@ class User extends CI_Controller {
 	public function permissions()
 	{
 		$this->form_validation->set_rules('resource', 'resource', 'required');
-		validate($this, 'user', '', function($token, $output)
+		return validate($this, 'user', '', function($token, $output)
 		{
 			$resource = $this->input->post('resource');
 			$acl = new ACL();
@@ -58,7 +58,7 @@ class User extends CI_Controller {
 	public function table()
 	{
 		$this->form_validation->set_rules('params', 'params', 'required');
-		validate($this, 'user', 'read', function($token, $output)
+		return validate($this, 'user', 'read', function($token, $output)
 		{
 			$params = json_decode(stripslashes($this->input->post('params')));
 			$table = $this->Users->table($params);
@@ -72,7 +72,7 @@ class User extends CI_Controller {
 	public function read()
 	{
 		$this->form_validation->set_rules('id', 'id', 'required');
-		validate($this, 'user', 'read', function($token, $output)
+		return validate($this, 'user', 'read', function($token, $output)
 		{
 			$id = $this->input->post('id');
 			$user = $this->Users->read($id);
@@ -85,7 +85,7 @@ class User extends CI_Controller {
 	public function update()
 	{
 		$this->form_validation->set_rules('user', 'user', 'required');
-		validate($this, 'user', 'update', function($token, $output)
+		return validate($this, 'user', 'update', function($token, $output)
 		{
 			$user = json_decode(stripslashes($this->input->post('user')));
 			$user = $this->Users->update($user);
@@ -98,7 +98,7 @@ class User extends CI_Controller {
 	public function delete()
 	{
 		$this->form_validation->set_rules('id', 'id', 'required');
-		validate($this, 'user', 'delete', function($token, $output)
+		return validate($this, 'user', 'delete', function($token, $output)
 		{
 			$id = $this->input->post('id');
 			$this->Users->delete($id);

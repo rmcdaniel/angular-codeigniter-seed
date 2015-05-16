@@ -25,5 +25,9 @@ function validate($context, $class, $function, $callback) {
 		}
 		$output['errors'] = $errors;
 	}
-	$context->load->view('json', array('output' => $output));    
+	if (defined('PHPUNIT_TEST')) {
+		return json_encode(array('output' => $output));
+	} else {
+		$context->load->view('json', array('output' => $output));
+	}
 }
