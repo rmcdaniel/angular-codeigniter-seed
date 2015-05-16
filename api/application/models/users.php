@@ -12,7 +12,7 @@ class Users extends CI_Model {
 		if ($query->num_rows() == 1)
 		{
 			$result = $query->result();
-			if (validate_password($password, $result[0]->password))
+			if (Password::validate_password($password, $result[0]->password))
 			{
 				return $result[0]->id;
 			}
@@ -24,7 +24,7 @@ class Users extends CI_Model {
 	public function register($email, $password)
 	{
 		$this->db->set('email',  $email);
-		$this->db->set('password', create_hash($password));
+		$this->db->set('password', Password::create_hash($password));
 		$this->db->insert('users');
 		return $this->db->insert_id();
 	}

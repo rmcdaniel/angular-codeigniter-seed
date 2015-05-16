@@ -71,7 +71,8 @@ class CLI extends CI_Controller {
         // ... add your custom resources to protect here
         // ...
         
-        echo "installed\r\n";
+		if (!defined('PHPUNIT_TEST'))
+	        echo "installed\r\n";
 	}
 
 	public function add($type, $email, $password)
@@ -82,7 +83,8 @@ class CLI extends CI_Controller {
 		{
 			$this->Users->register($email, $password);
 	
-	        echo "user added\r\n";
+			if (!defined('PHPUNIT_TEST'))
+		        echo "user added\r\n";
 		}
 		else if ($type == 'administrator')
 		{
@@ -90,7 +92,8 @@ class CLI extends CI_Controller {
 	        $acl = new ACL();
 			$acl->addUserRoles($id, 'administrator');
 
-	        echo "administrator added\r\n";
+			if (!defined('PHPUNIT_TEST'))
+		        echo "administrator added\r\n";
 		}
 	}
 	

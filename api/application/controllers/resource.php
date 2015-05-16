@@ -6,7 +6,7 @@ class Resource extends REST_Controller {
 	{
 		$this->form_validation->set_rules('params', 'params', 'required');
 		$this->form_validation->set_rules('role', 'role', 'required');
-		validate($this, 'resource', 'read', function($token, $output)
+		return Validation::validate($this, 'resource', 'read', function($token, $output)
 		{
 			$params = json_decode(stripslashes($this->input->post('params')));
 			$role = $this->input->post('role');

@@ -20,7 +20,7 @@ class REST_Controller extends CI_Controller {
 	{
 		$this->__load();
 		$this->form_validation->set_rules('params', 'params', 'required');
-		return validate($this, $this->resource, 'read', function($token, $output)
+		return Validation::validate($this, $this->resource, 'read', function($token, $output)
 		{
 			$params = json_decode(stripslashes($this->input->post('params')));
 			$table = $this->model->table($params);
@@ -35,7 +35,7 @@ class REST_Controller extends CI_Controller {
 	{
 		$this->__load();
 		$this->form_validation->set_rules($this->resource, $this->resource, 'required');
-		validate($this, $this->resource, 'create', function($token, $output)
+		return Validation::validate($this, $this->resource, 'create', function($token, $output)
 		{
 			$resource = $this->input->post($this->resource);
 			$this->model->create($resource);
@@ -48,7 +48,7 @@ class REST_Controller extends CI_Controller {
 	{
 		$this->__load();
 		$this->form_validation->set_rules('id', 'id', 'required');
-		return validate($this, $this->resource, 'read', function($token, $output)
+		return Validation::validate($this, $this->resource, 'read', function($token, $output)
 		{
 			$id = $this->input->post('id');
 			$resource = $this->model->read($id);
@@ -62,7 +62,7 @@ class REST_Controller extends CI_Controller {
 	{
 		$this->__load();
 		$this->form_validation->set_rules($this->resource, $this->resource, 'required');
-		return validate($this, $this->resource, 'update', function($token, $output)
+		return Validation::validate($this, $this->resource, 'update', function($token, $output)
 		{
 			$resource = json_decode(stripslashes($this->input->post($this->resource)));
 			$resource = $this->model->update($resource);
@@ -76,7 +76,7 @@ class REST_Controller extends CI_Controller {
 	{
 		$this->__load();
 		$this->form_validation->set_rules('id', 'id', 'required');
-		return validate($this, $this->resource, 'delete', function($token, $output)
+		return Validation::validate($this, $this->resource, 'delete', function($token, $output)
 		{
 			$id = $this->input->post('id');
 			$this->model->delete($id);

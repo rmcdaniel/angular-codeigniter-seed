@@ -6,7 +6,7 @@ class User extends REST_Controller {
 	{
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
-		return validate($this, '', '', function($token, $output)
+		return Validation::validate($this, '', '', function($token, $output)
 		{
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
@@ -30,7 +30,7 @@ class User extends REST_Controller {
 	{
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|is_unique[users.email]|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
-		return validate($this, '', '', function($token, $output)
+		return Validation::validate($this, '', '', function($token, $output)
 		{
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
@@ -43,7 +43,7 @@ class User extends REST_Controller {
 	public function permissions()
 	{
 		$this->form_validation->set_rules('resource', 'resource', 'required');
-		return validate($this, 'user', 'read', function($token, $output)
+		return Validation::validate($this, 'user', 'read', function($token, $output)
 		{
 			$resource = $this->input->post('resource');
 			$acl = new ACL();
