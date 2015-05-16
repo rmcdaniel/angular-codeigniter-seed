@@ -19,7 +19,7 @@ before_script:
     - patch -p0 < tests/sauce.patch
 
 script:
-    - tests/vendor/bin/phpunit --configuration `pwd`tests/phpunit.xml --coverage-clover build/logs/clover.xml
+    - tests/vendor/bin/phpunit --configuration `pwd`/tests/phpunit.xml --coverage-clover build/logs/clover.xml
     - tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/selenium.php
 
 after_script: tests/vendor/bin/test-reporter
