@@ -44,6 +44,7 @@ class UnitTest extends PHPUnit_Framework_TestCase
     public function testLoginFail()
     {
         $this->assertFalse($this->login('')->status);
+        $this->assertFalse($this->login('foo@bar.com', 'password456')->status);
     }
 
     public function testRegisterSuccess()

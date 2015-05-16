@@ -8,7 +8,6 @@ function validate($context, $class, $function, $callback) {
     	$token = ACL::authenticate($class, $function);
     	if ($token == false) {
 			if (defined('PHPUNIT_TEST')) {
-				echo json_encode(array('output' => $output));
 				return json_encode(array('output' => $output));
 			} else {
 				$context->load->view('json', array('output' => $output));
@@ -33,7 +32,6 @@ function validate($context, $class, $function, $callback) {
 		$output['errors'] = $errors;
 	}
 	if (defined('PHPUNIT_TEST')) {
-		echo json_encode(array('output' => $output));
 		return json_encode(array('output' => $output));
 	} else {
 		$context->load->view('json', array('output' => $output));
