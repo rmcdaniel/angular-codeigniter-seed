@@ -2,6 +2,8 @@
 
 class User extends CI_Controller {
 
+	use REST;
+
 	public function login()
 	{
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|max_length[256]');
@@ -55,57 +57,6 @@ class User extends CI_Controller {
 		});
 	}
 
-	public function table()
-	{
-		$this->form_validation->set_rules('params', 'params', 'required');
-		return validate($this, 'user', 'read', function($token, $output)
-		{
-			$params = json_decode(stripslashes($this->input->post('params')));
-			$table = $this->Users->table($params);
-			$output['status'] = true;
-	        $output['total'] = $table['total'];
-	        $output['users'] = $table['users'];
-			return $output;
-		});
-	}
-	
-	public function read()
-	{
-		$this->form_validation->set_rules('id', 'id', 'required');
-		return validate($this, 'user', 'read', function($token, $output)
-		{
-			$id = $this->input->post('id');
-			$user = $this->Users->read($id);
-			$output['status'] = true;
-	        $output['user'] = $user;
-			return $output;
-		});
-	}
-
-	public function update()
-	{
-		$this->form_validation->set_rules('user', 'user', 'required');
-		return validate($this, 'user', 'update', function($token, $output)
-		{
-			$user = json_decode(stripslashes($this->input->post('user')));
-			$user = $this->Users->update($user);
-			$output['status'] = true;
-	        $output['user'] = $user;
-			return $output;
-		});
-	}
-
-	public function delete()
-	{
-		$this->form_validation->set_rules('id', 'id', 'required');
-		return validate($this, 'user', 'delete', function($token, $output)
-		{
-			$id = $this->input->post('id');
-			$this->Users->delete($id);
-			$output['status'] = true;
-			return $output;
-		});
-	}	
 }
 
 /* End of file user.php */

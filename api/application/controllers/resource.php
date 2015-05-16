@@ -2,17 +2,7 @@
 
 class Resource extends CI_Controller {
 
-	public function create()
-	{
-		$this->form_validation->set_rules('role', 'role', 'required');
-		validate($this, 'resource', 'create', function($token, $output)
-		{
-			$role = $this->input->post('role');
-			$this->Resources->create($role);
-			$output['status'] = true;
-			return $output;
-		});
-	}
+	use REST;
 
 	public function table()
 	{
@@ -26,18 +16,6 @@ class Resource extends CI_Controller {
 			$output['status'] = true;
 	        $output['total'] = $table['total'];
 	        $output['resources'] = $table['resources'];
-			return $output;
-		});
-	}
-
-	public function delete()
-	{
-		$this->form_validation->set_rules('role', 'role', 'required');
-		validate($this, 'resource', 'delete', function($token, $output)
-		{
-			$role = $this->input->post('role');
-			$this->Resources->delete($role);
-			$output['status'] = true;
 			return $output;
 		});
 	}

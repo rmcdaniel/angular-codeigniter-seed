@@ -20,6 +20,7 @@
   </testsuites>
   <filter>
     <whitelist>
+      <directory suffix=".php">../api/application/core</directory>
       <directory suffix=".php">../api/application/models</directory>
       <directory suffix=".php">../api/application/views</directory>
       <directory suffix=".php">../api/application/controllers</directory>
