@@ -1,13 +1,20 @@
 <?php
 
 function validate($context, $class, $function, $callback) {
+	$output = array();
+	$output['status'] = false;
     $token = false;
     if (!empty($class)) {
     	$token = ACL::authenticate($class, $function);
-    	if ($token == false) return;
+    	if ($token == false) {
+			if (defined('PHPUNIT_TEST')) {
+				echo json_encode(array('output' => $output));
+				return json_encode(array('output' => $output));
+			} else {
+				$context->load->view('json', array('output' => $output));
+			}
+    	}
     }
-	$output = array();
-	$output['status'] = false;
 	$context->form_validation->set_error_delimiters('', '');
 	$validated = $context->form_validation->run();
 	if ($validated)
@@ -26,6 +33,7 @@ function validate($context, $class, $function, $callback) {
 		$output['errors'] = $errors;
 	}
 	if (defined('PHPUNIT_TEST')) {
+		echo json_encode(array('output' => $output));
 		return json_encode(array('output' => $output));
 	} else {
 		$context->load->view('json', array('output' => $output));

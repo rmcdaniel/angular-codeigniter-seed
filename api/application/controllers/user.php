@@ -43,7 +43,7 @@ class User extends REST_Controller {
 	public function permissions()
 	{
 		$this->form_validation->set_rules('resource', 'resource', 'required');
-		return validate($this, 'user', '', function($token, $output)
+		return validate($this, 'user', 'read', function($token, $output)
 		{
 			$resource = $this->input->post('resource');
 			$acl = new ACL();
