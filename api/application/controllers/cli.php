@@ -4,7 +4,6 @@ class CLI extends CI_Controller {
 
 	public function index()
 	{
-		// echo 'ok';
 	}
 
 	public function install()
