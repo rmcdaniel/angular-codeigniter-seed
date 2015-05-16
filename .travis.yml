@@ -22,7 +22,9 @@ script:
     - vendor/bin/phpunit --configuration `pwd`/tests/phpunit.xml --coverage-clover ../build/logs/clover.xml
     - vendor/bin/paratest -p 8 -f --phpunit=vendor/bin/phpunit tests/SeleniumTest.php
 
-after_script: vendor/bin/test-reporter
+after_script:
+    - vendor/bin/test-reporter
+    - php vendor/bin/coveralls
 
 env:
     global:
