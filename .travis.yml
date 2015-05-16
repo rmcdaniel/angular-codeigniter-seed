@@ -23,9 +23,8 @@ script:
     - vendor/bin/paratest -p 8 -f --phpunit=vendor/bin/phpunit tests/SeleniumTest.php
 
 after_script:
-    - vendor/bin/test-reporter
-    - php vendor/bin/coveralls
-
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
 env:
     global:
         - secure: my2TT2Gq1b58eKJtiF9pg1WTr2Qj7V1TtB95JaJ0NPOmWaeC1yNEeGRDkxm+Exjq6OTaEtZjmbAmMVq9/37abCjS4uYYPplRb1yDKBSMV0LdEVeJCHGI7mwX8LPVbH7CbolPmE9zUwXud5/4+ZCgvAQ0TGe2/CIG7egJ/uZm4XM=
