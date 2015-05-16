@@ -1,10 +1,15 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-trait REST {
-	
+class REST_Controller extends CI_Controller {
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+
 	private function __load()
 	{
-		$className = get_class();
+		$className = get_class($this);
 		$modelName = $className . 's';
 		$this->model = $this->$modelName;
 		$this->resource = strtolower($className);
@@ -79,5 +84,5 @@ trait REST {
 			return $output;
 		});
 	}	
-	
+
 }

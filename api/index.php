@@ -199,7 +199,6 @@ if (defined('ENVIRONMENT'))
  * And away we go...
  *
  */
-require_once APPPATH.'core/REST.php';
 require_once BASEPATH.'core/CodeIgniter.php';
 
 /* End of file index.php */

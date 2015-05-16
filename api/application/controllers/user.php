@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User extends CI_Controller {
-
-	use REST;
+class User extends REST_Controller {
 
 	public function login()
 	{

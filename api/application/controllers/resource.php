@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Resource extends CI_Controller {
-
-	use REST;
+class Resource extends REST_Controller {
 
 	public function table()
 	{

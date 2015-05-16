@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Role extends CI_Controller {
-
-	use REST;
+class Role extends REST_Controller {
 
 }
 
