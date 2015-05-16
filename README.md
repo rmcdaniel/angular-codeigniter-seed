@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/rmcdaniel/angular-codeigniter-seed.svg?branch=master)](https://travis-ci.org/rmcdaniel/angular-codeigniter-seed) [![Test Coverage](https://codeclimate.com/github/rmcdaniel/angular-codeigniter-seed/badges/coverage.svg)](https://codeclimate.com/github/rmcdaniel/angular-codeigniter-seed/coverage)
-
+[![Build Status](https://travis-ci.org/rmcdaniel/angular-codeigniter-seed.svg?branch=master)](https://travis-ci.org/rmcdaniel/angular-codeigniter-seed) [![Coverage Status](https://coveralls.io/repos/rmcdaniel/angular-codeigniter-seed/badge.svg)](https://coveralls.io/r/rmcdaniel/angular-codeigniter-seed)
 # angular-codeigniter-seed
 
 ## Features
