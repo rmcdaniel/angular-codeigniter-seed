@@ -18,7 +18,7 @@ before_script:
     - cd tests && composer install && cd ..
     - patch -p0 < tests/sauce.patch
 
-script: tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/run.php
+script: tests/vendor/bin/paratest -p 8 -f --coverage-clover=build/logs/clover.xml --phpunit=tests/vendor/bin/phpunit tests/run.php
 
 env:
     global:

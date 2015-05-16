@@ -1,5 +1,6 @@
 {
     "require": {
-        "sauce/sausage": ">=0.16.0"
+        "sauce/sausage": ">=0.16.0",
+        "codeclimate/php-test-reporter": "dev-master"
     }
 }
