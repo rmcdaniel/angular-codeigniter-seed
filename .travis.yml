@@ -9,20 +9,20 @@ before_script:
     - sudo a2enmod rewrite actions fastcgi alias
     - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-    - sudo cp -f tests/travis-ci-apache /etc/apache2/sites-available/default
+    - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
     - sudo service apache2 restart
     - mysql -e 'create database acs;'
     - php api/index.php cli install
     - php api/index.php cli add administrator foo@bar.com password123
-    - cd tests && composer install && cd ..
-    - patch -p0 < tests/sauce.patch
+    - composer install
+    - patch -p0 < build/sauce.patch
 
 script:
-    - tests/vendor/bin/phpunit --configuration `pwd`/tests/phpunit.xml --coverage-clover build/logs/clover.xml
-    - tests/vendor/bin/paratest -p 8 -f --phpunit=tests/vendor/bin/phpunit tests/selenium.php
+    - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - vendor/bin/paratest -p 8 -f --phpunit=vendor/bin/phpunit tests/SeleniumTest.php
 
-after_script: tests/vendor/bin/test-reporter
+after_script: vendor/bin/test-reporter
 
 env:
     global:

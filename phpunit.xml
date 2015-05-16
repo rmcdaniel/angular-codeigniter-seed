@@ -12,10 +12,10 @@
     syntaxCheck="false"
     cacheTokens="true"
     verbose="false"
-    bootstrap="bootstrap.php">
+    bootstrap="build/bootstrap.php">
   <testsuites>
     <testsuite name="unit">
-      <file>unit.php</file>
+      <file>tests/UnitTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>
