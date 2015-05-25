@@ -146,7 +146,7 @@ class ACL {
         $roles = $this->userRoles($user);
         $permissions = array();
         foreach ($roles as $role) {
-            $permissions = array_unique(array_merge($permissions, $this->rolePermissions($role, $resource)));
+           $permissions = array_values(array_unique(array_merge($permissions, $this->rolePermissions($role, $resource)))); 
         }
         return $permissions;
     }
