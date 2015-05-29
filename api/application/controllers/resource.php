@@ -12,8 +12,8 @@ class Resource extends REST_Controller {
 			$role = $this->input->post('role');
 			$table = $this->Resources->table($params, $role);
 			$output['status'] = true;
-	        $output['total'] = $table['total'];
-	        $output['resources'] = $table['resources'];
+			$output['total'] = $table['total'];
+			$output['resources'] = $table['resources'];
 			return $output;
 		});
 	}

@@ -1,37 +1,37 @@
 <?php
 
 abstract class Backend {
-    abstract function read($key);
-    abstract function write($key, $value);
+	abstract function read($key);
+	abstract function write($key, $value);
 }
 
 class BackendRedis extends Backend {
-    private $redis;
+	private $redis;
 
-    function __construct($host, $port) {
-        $this->redis = new Redis();
-	    $this->redis->connect($host, $port);
-    }
+	function __construct($host, $port) {
+		$this->redis = new Redis();
+		$this->redis->connect($host, $port);
+	}
 
-    function read($key) {
-        $value = $this->redis->get($key);
-        return empty($value) ? array() : json_decode($value);
-    }
+	function read($key) {
+		$value = $this->redis->get($key);
+		return empty($value) ? array() : json_decode($value);
+	}
 
-    function write($key, $value) {
-        $this->redis->set($key, json_encode($value));
-    }
+	function write($key, $value) {
+		$this->redis->set($key, json_encode($value));
+	}
 }
 
 class BackendCodeIgniter extends Backend {
-    private $db;
+	private $db;
 
-    function __construct() {
-        $ci = &get_instance();
-        $this->db = $ci->db;
-    }
+	function __construct() {
+		$ci = &get_instance();
+		$this->db = $ci->db;
+	}
 
-    function read($key) {
+	function read($key) {
 		$this->db->select('value');
 		$this->db->from('acl');
 		$this->db->where('key', $key);
@@ -43,9 +43,9 @@ class BackendCodeIgniter extends Backend {
 			return json_decode($result[0]->value);
 		}
 		return array();
-    }
+	}
 
-    function write($key, $value) {
+	function write($key, $value) {
 		$this->db->select('value');
 		$this->db->from('acl');
 		$this->db->where('key', $key);

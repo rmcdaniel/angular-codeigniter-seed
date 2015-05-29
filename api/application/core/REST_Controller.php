@@ -2,10 +2,10 @@
 
 class REST_Controller extends CI_Controller {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
+	function __construct()
+	{
+		parent::__construct();
+	}
 
 	private function __load()
 	{
@@ -53,7 +53,7 @@ class REST_Controller extends CI_Controller {
 			$id = $this->input->post('id');
 			$resource = $this->model->read($id);
 			$output['status'] = true;
-	        $output[$this->resource] = $resource;
+			$output[$this->resource] = $resource;
 			return $output;
 		});
 	}
@@ -67,7 +67,7 @@ class REST_Controller extends CI_Controller {
 			$resource = json_decode(stripslashes($this->input->post($this->resource)));
 			$resource = $this->model->update($resource);
 			$output['status'] = true;
-	        $output[$this->resource] = $resource;
+			$output[$this->resource] = $resource;
 			return $output;
 		});
 	}
