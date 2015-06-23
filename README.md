@@ -9,15 +9,6 @@
 - User manager
 - Role-based ACL
 
-## Demo
-
-https://bitlab.co/acs
-
-User: foo@bar.com  
-Pass: password123
-
-The demo resets every hour.
-
 ## Requires
 
 mcrypt
