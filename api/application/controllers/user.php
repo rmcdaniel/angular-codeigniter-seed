@@ -4,6 +4,7 @@ class User extends REST_Controller {
 
 	public function login()
 	{
+		return;
 		$this->form_validation->set_rules('email', 'email', 'required|valid_email|max_length[256]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[256]');
 		return Validation::validate($this, '', '', function($token, $output)
